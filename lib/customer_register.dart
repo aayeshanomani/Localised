@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:localised/constants.dart';
 
 import 'auth.dart';
+import 'loading.dart';
 
 class CustRegister extends StatefulWidget {
 
@@ -18,6 +19,7 @@ class _CustRegisterState extends State<CustRegister> {
 
   final Auth _auth = Auth();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   String email ="";
   String password = "";
@@ -26,7 +28,7 @@ class _CustRegisterState extends State<CustRegister> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       backgroundColor: Colors.indigoAccent[100],
       appBar: AppBar
       (
@@ -109,10 +111,15 @@ class _CustRegisterState extends State<CustRegister> {
                 {
                   if(_formKey.currentState.validate())
                   {
+                    setState(() 
+                    {
+                      loading = true;
+                    });
                     dynamic result = await _auth.SignUpEmailPassword(email, password);
                     if(result == null)
                     {
                       setState(() {
+                        loading = false;
                         error = "Enter a valid email";
                       });
                     }
@@ -128,7 +135,7 @@ class _CustRegisterState extends State<CustRegister> {
                   fontSize: 14.0
                 ),
               ),
-            ],
+            ], 
           ),
         )
       ),
