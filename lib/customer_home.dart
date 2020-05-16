@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:localised/auth.dart';
 
+import 'package:geolocator/geolocator.dart';
+
 class 
 CustomerHome extends StatelessWidget {
 
