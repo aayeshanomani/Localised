@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:localised/database.dart';
 import 'package:localised/user.dart';
 
 class Auth
@@ -57,7 +58,11 @@ class Auth
     {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+
+      //create new document for the user with uid
+      await Database(uid: user.uid).updateUserData("name","customer", 45, 100);
       return _userFromFirebase(user);
+
     }
     catch(e)
     {

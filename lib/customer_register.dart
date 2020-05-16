@@ -21,7 +21,8 @@ class _CustRegisterState extends State<CustRegister> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
-  String email ="";
+  String uname = "";
+  String email = "";
   String password = "";
   String confirmPassword = "";
   String error = "";
@@ -60,6 +61,18 @@ class _CustRegisterState extends State<CustRegister> {
           (
             children: <Widget>
             [
+              SizedBox(height: 20.0,),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Enter Username'),
+                onChanged: (val)
+                {
+                  setState(() {
+                    uname = val;
+                  });
+                },
+
+              validator: (val) => val.isEmpty ? 'Username cannot be empty' : null,
+              ),
               SizedBox(height: 20.0,),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'Enter Email'),
