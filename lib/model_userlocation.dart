@@ -4,6 +4,6 @@ class UserLocation
   double long;
 
   UserLocation({
-    this.lat, this.long
+    this.lat = 0.0, this.long = 0.0
   });
 }

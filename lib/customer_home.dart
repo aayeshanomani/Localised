@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:localised/loading.dart';
 import 'package:localised/model_userlocation.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,7 @@ CustomerHome extends StatelessWidget {
   {
 
     var userLocation = Provider.of<UserLocation>(context);
-    return Scaffold
+    return userLocation == null ? Loading() : Scaffold
     (
       backgroundColor: Colors.indigoAccent[400],
       appBar: AppBar
@@ -71,7 +72,7 @@ CustomerHome extends StatelessWidget {
                 (
                   child: IconButton
                   (
-                    icon: Icon(Icons.location_searching),
+                    icon: Icon(Icons.location_on),
                     color: Colors.lightBlueAccent[100],
                     iconSize: 39.0,
                     onPressed: ()
