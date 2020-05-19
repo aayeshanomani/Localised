@@ -5,13 +5,18 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:localised/model_userlocation.dart';
+import 'package:provider/provider.dart';
 
 class 
 CustomerHome extends StatelessWidget {
 
   final Auth _auth = Auth();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) 
+  {
+
+    var userLocation = Provider.of<UserLocation>(context);
     return Scaffold
     (
       backgroundColor: Colors.indigoAccent[400],
@@ -40,7 +45,7 @@ CustomerHome extends StatelessWidget {
         options: new MapOptions
         (
           minZoom: 10.0,
-          center: new LatLng(40.71,-73.93),
+          center: new LatLng(userLocation.lat, userLocation.long),
         ),
         layers: 
         [
@@ -61,7 +66,7 @@ CustomerHome extends StatelessWidget {
               (
                 width: 74.0,
                 height: 95.0,
-                point: new LatLng(40.71,-73.93),
+                point: new LatLng(userLocation.lat,userLocation.long),
                 builder: (context) => new Container
                 (
                   child: IconButton
