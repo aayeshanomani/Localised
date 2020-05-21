@@ -10,14 +10,26 @@ import 'package:provider/provider.dart';
 
 import 'auth.dart';
 
-class 
-CustomerHome extends StatelessWidget {
-
-  final Auth _auth = Auth();
+class CustomerHome extends StatefulWidget {
   @override
-  Widget build(BuildContext context) 
-  {
+  _CustomerHomeState createState() => _CustomerHomeState();
+}
 
+class _CustomerHomeState extends State<CustomerHome> {
+
+  int _currentIndex = 0;
+  Auth _auth = Auth();
+
+  final tabs = [
+      Mapview(),
+      Center(child: Text('Search'),),
+      Center(child: Text('Chat'),),
+      Center(child: Text('Settings'),),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    
     var userLocation = Provider.of<UserLocation>(context);
     return userLocation == null ? Loading() : Scaffold
     (
@@ -42,7 +54,89 @@ CustomerHome extends StatelessWidget {
         ],
       ),
 
-      body: new FlutterMap
+      body: tabs[_currentIndex],
+
+      bottomNavigationBar: BottomNavigationBar
+      (
+        currentIndex: _currentIndex,
+        //iconSize: 30.0,
+
+        items: [
+          BottomNavigationBarItem
+          (
+            icon: Icon
+            (
+              Icons.map,
+              color: Colors.lightBlueAccent[400],
+            ),
+            title: Text
+            (
+              'Near You',
+              style: TextStyle(color: Colors.lightBlueAccent[700]),
+            ),
+            backgroundColor: Colors.blue[50],
+          ),
+          BottomNavigationBarItem
+          (
+            icon: Icon
+            (
+              Icons.search,
+              color: Colors.lightBlueAccent[400],
+            ),
+            title: Text
+            (
+              'Search',
+              style: TextStyle(color: Colors.lightBlueAccent[700]),
+            ),
+            backgroundColor: Colors.blue[50],
+          ),
+          BottomNavigationBarItem
+          (
+            icon: Icon
+            (
+              Icons.chat,
+              color: Colors.lightBlueAccent[400],
+            ),
+            title: Text
+            (
+              'Chat',
+              style: TextStyle(color: Colors.lightBlueAccent[700]),
+            ),
+            backgroundColor: Colors.blue[50],
+          ),
+          BottomNavigationBarItem
+          (
+            icon: Icon
+            (
+              Icons.settings,
+              color: Colors.lightBlueAccent[400],
+            ),
+            title: Text
+            (
+              'Settings',
+              style: TextStyle(color: Colors.lightBlueAccent[700]),
+            ),
+            backgroundColor: Colors.blue[50],
+          )
+        ],
+        onTap: (index)
+        {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class Mapview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    var userLocation = Provider.of<UserLocation>(context);
+    return 
+      FlutterMap
       (
         options: new MapOptions
         (
@@ -86,7 +180,6 @@ CustomerHome extends StatelessWidget {
             ] 
           )
         ],
-      ),
-    );
+      );
   }
 }
