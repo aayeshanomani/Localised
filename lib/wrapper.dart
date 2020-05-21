@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:localised/authenticate.dart';
 import 'package:localised/choice.dart';
 import 'package:localised/customer_home.dart';
 import 'package:localised/model_userlocation.dart';
@@ -24,7 +23,7 @@ class Wrapper extends StatelessWidget {
       (
         //builder: (context) => LocationService().locationStream,
         create: (BuildContext context) => LocationService().locationStream,
-        child: CustomerHome(), 
+        child: CustomerHome(),
       );
     }
   }

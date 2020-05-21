@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:localised/authenticate.dart';
+import 'package:localised/customer_home.dart';
 import 'package:localised/customer_signin.dart';
+import 'package:localised/merchant_authenticate.dart';
+import 'package:localised/merchant_register.dart';
+import 'package:localised/user.dart';
+import 'package:provider/provider.dart';
+
+import 'customer_authenticate.dart';
 
 class Choice extends StatefulWidget {
   @override
@@ -8,8 +14,20 @@ class Choice extends StatefulWidget {
 }
 
 class _ChoiceState extends State<Choice> {
+
+  String type = "";
   @override
   Widget build(BuildContext context) {
+
+    if(type == "customer")
+    {
+      return CustAuthenticate();
+    }
+    if(type == "merchant")
+    {
+      return MerchAuthenticate();
+    }
+
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       body: Container
@@ -32,9 +50,12 @@ class _ChoiceState extends State<Choice> {
                 ),
                 onPressed: ()
                 {
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return Cust_SignIn();
-                  }));
+                  setState(() {
+                    type = "customer";
+                  });
+                  //Navigator.push(context, MaterialPageRoute(builder: (context){
+                    //return CustAuthenticate();
+                  //}));
                 },
               ),
               SizedBox(height: 20.0,),
@@ -48,7 +69,9 @@ class _ChoiceState extends State<Choice> {
                 ),
                 onPressed: ()
                 {
-
+                  setState(() {
+                    type = "merchant";
+                  });
                 },
               )
             ],

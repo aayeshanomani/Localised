@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:localised/customer_register.dart';
 import 'package:localised/customer_signin.dart';
 
-class Authenticate extends StatefulWidget {
+class CustAuthenticate extends StatefulWidget {
+
+
   @override
-  _AuthenticateState createState() => _AuthenticateState();
+  _CustAuthenticateState createState() => _CustAuthenticateState();
 }
 
-class _AuthenticateState extends State<Authenticate> {
+class _CustAuthenticateState extends State<CustAuthenticate> {
 
   bool showSignIn = true;
+  
 
   void toggleView()
   {
@@ -22,11 +25,11 @@ class _AuthenticateState extends State<Authenticate> {
   Widget build(BuildContext context) {
     if(showSignIn)
     {
-      return Cust_SignIn(toggleView: toggleView);
+      return Cust_SignIn(toggleView: toggleView,);
     }
     else
     {
-      return CustRegister(toggleView: toggleView);
+      return CustRegister(toggleView: toggleView,);
     }
   }
 }

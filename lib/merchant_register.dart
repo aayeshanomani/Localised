@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:localised/constants.dart';
-import 'package:localised/newloading.dart';
 import 'package:localised/wrapper.dart';
 
 import 'auth.dart';
-import 'customer_signin.dart';
 import 'loading.dart';
+import 'newloading.dart';
 
-class CustRegister extends StatefulWidget {
+
+class MerchRegister extends StatefulWidget {
 
   final Function toggleView;
-
-  CustRegister({
-    this.toggleView,
+  MerchRegister({
+    this.toggleView
   });
 
   @override
-  _CustRegisterState createState() => _CustRegisterState();
+  _MerchRegisterState createState() => _MerchRegisterState();
 }
 
-class _CustRegisterState extends State<CustRegister> {
+class _MerchRegisterState extends State<MerchRegister> {
 
+  final Auth _auth = Auth();
 
   final _formKey = GlobalKey<FormState>();
-  Auth _auth = Auth();
   bool loading = false;
 
   String uname = "";
@@ -68,7 +67,7 @@ class _CustRegisterState extends State<CustRegister> {
             [
               SizedBox(height: 20.0,),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Enter Username'),
+                decoration: textInputDecoration.copyWith(hintText: 'Enter Shop Name'),
                 onChanged: (val)
                 {
                   setState(() {
@@ -76,7 +75,7 @@ class _CustRegisterState extends State<CustRegister> {
                   });
                 },
 
-              validator: (val) => val.isEmpty ? 'Username cannot be empty' : null,
+              validator: (val) => val.isEmpty ? 'Shop Name cannot be empty' : null,
               ),
               SizedBox(height: 20.0,),
               TextFormField(
@@ -133,7 +132,7 @@ class _CustRegisterState extends State<CustRegister> {
                     {
                       loading = true;
                     });
-                    dynamic result = await _auth.CustSignUpEmailPassword(email, password);
+                    dynamic result = await _auth.MerchSignUpEmailPassword(email, password);
                     if(result == null)
                     {
                       setState(() {

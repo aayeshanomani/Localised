@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:localised/auth.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/customer_home.dart';
+import 'package:localised/customer_register.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/wrapper.dart';
 
 class Cust_SignIn extends StatefulWidget {
 
   final Function toggleView;
+ 
   Cust_SignIn({
-    this.toggleView
+    this.toggleView,
   });
 
   @override
@@ -109,13 +111,6 @@ class _Cust_SignInState extends State<Cust_SignIn> {
                         loading = false;
                         error = "Enter a registered email";
                       });
-                    }
-                    else
-                    {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)
-                      {
-                        return Wrapper();
-                      }));
                     }
                   }
                 },
