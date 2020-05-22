@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localised/choice.dart';
 import 'package:localised/database.dart';
+import 'package:localised/model_userlocation.dart';
 import 'package:localised/user.dart';
 
 class Auth
@@ -53,7 +54,7 @@ class Auth
   }
 
   //sign up email and password
-  Future CustSignUpEmailPassword(String email, String password) async
+  Future CustSignUpEmailPassword(String username, String email, String password, UserLocation userLocation) async
   {
     try
     {
@@ -61,7 +62,7 @@ class Auth
       FirebaseUser user = result.user;
 
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData("name","customer", 45, 100);
+      await Database(uid: user.uid).updateUserData(username,"customer", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);
 
     }
@@ -73,7 +74,7 @@ class Auth
   }
 
   //merchant sign up
-  Future MerchSignUpEmailPassword(String email, String password) async
+  Future MerchSignUpEmailPassword(String username, String email, String password, UserLocation userLocation) async
   {
     try
     {
@@ -81,7 +82,7 @@ class Auth
       FirebaseUser user = result.user;
 
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData("name","merchant", 45, 100);
+      await Database(uid: user.uid).updateUserData(username,"merchant", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);
 
     }

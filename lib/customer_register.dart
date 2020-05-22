@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/newloading.dart';
 import 'package:localised/wrapper.dart';
+import 'package:provider/provider.dart';
 
 import 'auth.dart';
 import 'customer_signin.dart';
 import 'loading.dart';
+import 'model_userlocation.dart';
 
 class CustRegister extends StatefulWidget {
 
@@ -32,8 +34,12 @@ class _CustRegisterState extends State<CustRegister> {
   String confirmPassword = "";
   String error = "";
 
+  
+
   @override
   Widget build(BuildContext context) {
+
+    var userLocation = Provider.of<UserLocation>(context);
     return loading ? NewLoading() : Scaffold(
       backgroundColor: Colors.indigoAccent[100],
       appBar: AppBar
@@ -133,7 +139,7 @@ class _CustRegisterState extends State<CustRegister> {
                     {
                       loading = true;
                     });
-                    dynamic result = await _auth.CustSignUpEmailPassword(email, password);
+                    dynamic result = await _auth.CustSignUpEmailPassword(uname, email, password, userLocation);
                     if(result == null)
                     {
                       setState(() {

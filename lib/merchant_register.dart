@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/wrapper.dart';
+import 'package:provider/provider.dart';
 
 import 'auth.dart';
 import 'loading.dart';
+import 'model_userlocation.dart';
 import 'newloading.dart';
 
 
@@ -33,6 +35,8 @@ class _MerchRegisterState extends State<MerchRegister> {
 
   @override
   Widget build(BuildContext context) {
+
+    var userLocation = Provider.of<UserLocation>(context);
     return loading ? NewLoading() : Scaffold(
       backgroundColor: Colors.indigoAccent[100],
       appBar: AppBar
@@ -132,7 +136,7 @@ class _MerchRegisterState extends State<MerchRegister> {
                     {
                       loading = true;
                     });
-                    dynamic result = await _auth.MerchSignUpEmailPassword(email, password);
+                    dynamic result = await _auth.MerchSignUpEmailPassword(uname, email, password, userLocation);
                     if(result == null)
                     {
                       setState(() {

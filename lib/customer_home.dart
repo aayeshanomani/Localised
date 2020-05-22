@@ -154,7 +154,7 @@ class Mapview extends StatelessWidget {
             ]
 
           ),
-          new MarkerLayerOptions
+          /*new MarkerLayerOptions
           (
             markers:
             [
@@ -178,7 +178,7 @@ class Mapview extends StatelessWidget {
                 )
               )
             ] 
-          )
+          )*/
         ],
       );
   }
