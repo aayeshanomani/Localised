@@ -9,6 +9,7 @@ import 'package:localised/model_userlocation.dart';
 import 'package:provider/provider.dart';
 
 import 'auth.dart';
+import 'mapview.dart';
 
 class CustomerHome extends StatefulWidget {
   @override
@@ -130,56 +131,3 @@ class _CustomerHomeState extends State<CustomerHome> {
   }
 }
 
-class Mapview extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    var userLocation = Provider.of<UserLocation>(context);
-    return 
-      FlutterMap
-      (
-        options: new MapOptions
-        (
-          minZoom: 10.0,
-          center: new LatLng(userLocation.lat, userLocation.long),
-        ),
-        layers: 
-        [
-          new TileLayerOptions
-          (
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: 
-            [
-              'a','b','c'
-            ]
-
-          ),
-          /*new MarkerLayerOptions
-          (
-            markers:
-            [
-              new Marker
-              (
-                width: 74.0,
-                height: 95.0,
-                point: new LatLng(userLocation.lat,userLocation.long),
-                builder: (context) => new Container
-                (
-                  child: IconButton
-                  (
-                    icon: Icon(Icons.location_on),
-                    color: Colors.lightBlueAccent[100],
-                    iconSize: 39.0,
-                    onPressed: ()
-                    {
-                      print('clicked');
-                    }
-                  ),
-                )
-              )
-            ] 
-          )*/
-        ],
-      );
-  }
-}
