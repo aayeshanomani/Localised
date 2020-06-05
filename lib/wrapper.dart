@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localised/choice.dart';
 import 'package:localised/customer_home.dart';
@@ -15,10 +16,16 @@ class Wrapper extends StatelessWidget {
     //return either home or authenticate
     if(user == null)
     {
-      return Choice();
+      return StreamProvider<UserLocation>
+      (
+        //builder: (context) => LocationService().locationStream,
+        create: (BuildContext context) => LocationService().locationStream,
+        child: Choice(),
+      );
     }
     else
     {
+      var uid = user.uid;
       return StreamProvider<UserLocation>
       (
         //builder: (context) => LocationService().locationStream,

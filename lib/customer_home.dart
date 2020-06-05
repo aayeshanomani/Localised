@@ -22,7 +22,7 @@ class _CustomerHomeState extends State<CustomerHome> {
   Auth _auth = Auth();
 
   final tabs = [
-      Mapview(),
+      MapView(),
       Center(child: Text('Search'),),
       Center(child: Text('Chat'),),
       Center(child: Text('Settings'),),
