@@ -14,6 +14,7 @@ class Database
 
   Future updateUserData
   (
+    String id,
     String name,
     String type,
     double latitude,
@@ -21,6 +22,7 @@ class Database
   ) async
   {
     return await location.document(uid).setData({
+      'id': uid,
       'name': name,
       'type': type,
       'latitude': latitude,

@@ -11,6 +11,8 @@ import 'customer_authenticate.dart';
 class Choice extends StatefulWidget {
   @override
   _ChoiceState createState() => _ChoiceState();
+
+  
 }
 
 class _ChoiceState extends State<Choice> {

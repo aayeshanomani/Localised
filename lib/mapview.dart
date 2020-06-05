@@ -31,32 +31,35 @@ class _MapViewState extends State<MapView> {
 
         for(int i = 0; i<snapshot.data.documents.length; i++)
         {
-          allMarkers.add
-          (
-            new Marker
+          if(snapshot.data.documents[i]['type'] == 'merchant')
+          {
+            allMarkers.add
             (
-              width: 74.0,
-              height: 95.0,
-              point: new LatLng
+              new Marker
               (
-                snapshot.data.documents[i]['latitude'],
-                snapshot.data.documents[i]['longitude'],
-              ),
-              builder: (context) => new Container
-              (
-                child: IconButton
+                width: 74.0,
+                height: 95.0,
+                point: new LatLng
                 (
-                  icon: Icon(Icons.location_on),
-                  color: Colors.lightBlueAccent[100],
-                  iconSize: 39.0,
-                  onPressed: ()
-                  {
-                    print(snapshot.data.documents[i]['name']);
-                  }
+                  snapshot.data.documents[i]['latitude'],
+                  snapshot.data.documents[i]['longitude'],
                 ),
+                builder: (context) => new Container
+                (
+                  child: IconButton
+                  (
+                    icon: Icon(Icons.location_on),
+                    color: Colors.lightBlueAccent[100],
+                    iconSize: 39.0,
+                    onPressed: ()
+                    {
+                      print(snapshot.data.documents[i]['name']);
+                    }
+                  ),
+                )
               )
-            )
-          );
+            );
+          }
         }
         return 
         FlutterMap

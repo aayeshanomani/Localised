@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localised/choice.dart';
 import 'package:localised/customer_home.dart';
+import 'package:localised/merchant_home.dart';
 import 'package:localised/model_userlocation.dart';
 import 'package:localised/service_location.dart';
 import 'package:localised/user.dart';
@@ -12,6 +13,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final user = Provider.of<User>(context);
+    String type = "";
     
     //return either home or authenticate
     if(user == null)
@@ -26,12 +28,37 @@ class Wrapper extends StatelessWidget {
     else
     {
       var uid = user.uid;
-      return StreamProvider<UserLocation>
+      final CollectionReference type = Firestore.instance.collection('locations');
+      return StreamBuilder
       (
-        //builder: (context) => LocationService().locationStream,
-        create: (BuildContext context) => LocationService().locationStream,
-        child: CustomerHome(),
+        stream: Firestore.instance.collection('locations').snapshots(),
+        builder: (context, snapshot)
+        {
+          for(int i=0; i<snapshot.data.documents.length; i++)
+          {
+            if(snapshot.data.documents[i]['type']=='customer' && snapshot.data.documents[i]['id'] == user.uid)
+            {
+              return StreamProvider<UserLocation>
+              (
+                //builder: (context) => LocationService().locationStream,
+                create: (BuildContext context) => LocationService().locationStream,
+                child: CustomerHome(),
+              );
+            }
+            else if(snapshot.data.documents[i]['type']=='merchant' && snapshot.data.documents[i]['id'] == user.uid)
+            {
+              return StreamProvider<UserLocation>
+              (
+                //builder: (context) => LocationService().locationStream,
+                create: (BuildContext context) => LocationService().locationStream,
+                child: MerchHome(),
+              );
+            }
+          }
+        }
       );
+      
+      
     }
   }
 }
