@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/model_userlocation.dart';
+import 'package:localised/searchview.dart';
 import 'package:provider/provider.dart';
 
 import 'auth.dart';
@@ -23,9 +24,9 @@ class _CustomerHomeState extends State<CustomerHome> {
 
   final tabs = [
       MapView(),
-      Center(child: Text('Search'),),
-      Center(child: Text('Chat'),),
-      Center(child: Text('Settings'),),
+      SearchView(),
+      Center(child: Text('Chat', style: TextStyle(color: Colors.blue[600]),),),
+      Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
   ];
 
   @override
@@ -34,7 +35,7 @@ class _CustomerHomeState extends State<CustomerHome> {
     var userLocation = Provider.of<UserLocation>(context);
     return userLocation == null ? Loading() : Scaffold
     (
-      backgroundColor: Colors.indigoAccent[400],
+      backgroundColor: Colors.black,
       appBar: AppBar
       (
         title: Text('Home',

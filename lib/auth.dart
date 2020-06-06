@@ -62,7 +62,7 @@ class Auth
       FirebaseUser user = result.user;
 
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData(user.uid,username,"customer", userLocation.lat, userLocation.long);
+      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,"customer", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);
 
     }
@@ -82,7 +82,7 @@ class Auth
       FirebaseUser user = result.user;
 
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData(user.uid,username,"merchant", userLocation.lat, userLocation.long);
+      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,"merchant", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);
 
     }
