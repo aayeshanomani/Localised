@@ -32,3 +32,15 @@ class Database
     });
   }
 }
+
+class DatabaseMethods
+{
+  createChatRoom(String chatroomId, chatroomMap)
+  {
+    Firestore.instance.collection('chatroom')
+    .document(chatroomId).setData(chatroomMap).catchError((e)
+    {
+      print(e.toString());
+    });
+  }
+}

@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:localised/chatstate.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/model_userlocation.dart';
 import 'package:localised/searchview.dart';
@@ -25,7 +26,7 @@ class _CustomerHomeState extends State<CustomerHome> {
   final tabs = [
       MapView(),
       SearchView(),
-      Center(child: Text('Chat', style: TextStyle(color: Colors.blue[600]),),),
+      ChatView(),
       Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
   ];
 

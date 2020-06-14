@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localised/database.dart';
+import 'package:localised/loading.dart';
 import 'package:localised/service_search.dart';
 
 class SearchView extends StatefulWidget {
@@ -11,6 +13,7 @@ class _SearchViewState extends State<SearchView> {
 
   var tempSearchStore = [];
   var queryResultSet = [];
+  var showLoad = 0;
 
   initiateSearch(value)
   {
@@ -30,7 +33,9 @@ class _SearchViewState extends State<SearchView> {
         for(int i = 0; i<docs.documents.length; i++)
         {
           queryResultSet.add(docs.documents[i].data);
+          showLoad = 1;
         }
+        showLoad = 0;
       });
     }
     else
@@ -46,6 +51,12 @@ class _SearchViewState extends State<SearchView> {
         }
       });
     }
+  }
+
+  moveToChatRoom(String username)
+  {
+    List<String> Users = [username];
+    DatabaseMethods().createChatRoom(username, username);
   }
 
   @override
@@ -130,18 +141,53 @@ Widget resultCard(e)
     elevation: 3.0,
     child: Container
     (
-      child: Center
+      child: Column
       (
-        child: Text
-        (
-          e['name'].toUpperCase(),
-          textAlign: TextAlign.center,
-          style: TextStyle
-          (
-            color: Colors.black,
-            fontSize: 20.0,
+        children: <Widget>
+        [
+          Padding(padding: EdgeInsets.all(20.0)),
+          SizedBox(height: 20.0),
+          Center(
+            child: Text
+            (
+              e['name'].toUpperCase(),
+              textAlign: TextAlign.center,
+              style: TextStyle
+              (
+                color: Colors.black,
+                fontSize: 20.0,
+              ),
+            ),
           ),
-        ),
+          SizedBox(height: 40.0),
+          //Spacer(),
+          Row(
+            children: <Widget>[
+              SizedBox(width:80.0),
+              GestureDetector
+              (
+                onTap: ()
+                {
+
+                },
+                child: Container
+                (
+                  decoration: BoxDecoration
+                  (
+                    color: Colors.indigo[200],
+                    borderRadius: BorderRadius.circular(29.0)
+                  ),
+                  padding: EdgeInsets.all(10.0),
+                  child: Text
+                  (
+                    'Message',
+                    style: TextStyle(color: Colors.indigo[300]),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     ),
   );
