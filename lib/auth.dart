@@ -1,8 +1,10 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localised/choice.dart';
 import 'package:localised/database.dart';
 import 'package:localised/model_userlocation.dart';
 import 'package:localised/user.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth
 {
@@ -62,7 +64,7 @@ class Auth
       FirebaseUser user = result.user;
 
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,"customer", userLocation.lat, userLocation.long);
+      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,email,"customer", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);
 
     }
@@ -82,7 +84,7 @@ class Auth
       FirebaseUser user = result.user;
 
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,"merchant", userLocation.lat, userLocation.long);
+      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,email,"merchant", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);
 
     }
@@ -92,6 +94,39 @@ class Auth
       return null;
     }
   }
+
+  Future resetPass(String email)
+  async {
+    try
+    {
+      return await _auth.sendPasswordResetEmail(email: email);
+    }
+    catch(e)
+    {
+      print(e.toString());
+    }
+  }
+
+  /*Future<FirebaseUser> signInWithGoogle(BuildContext context) async {
+    final GoogleSignIn _googleSignIn = new GoogleSignIn();
+
+    final GoogleSignInAccount googleSignInAccount =
+    await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+    await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+
+    AuthResult result = await _auth.signInWithCredential(credential);
+    FirebaseUser userDetails = result.user;
+
+    if (result == null) {
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Chat()));
+    }
+  }*/
 
   //sign out
   Future signOut() async

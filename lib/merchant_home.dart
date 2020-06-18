@@ -13,6 +13,13 @@ class _MerchHomeState extends State<MerchHome> {
 
   Auth _auth = Auth();
 
+  int _currentIndex = 0;
+
+  final tabs = [
+    Center(child: Text('Chat', style: TextStyle(color: Colors.blue[600]),),),
+    Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
+  ];
+
   @override
   Widget build(BuildContext context) 
   {
@@ -40,10 +47,50 @@ class _MerchHomeState extends State<MerchHome> {
         ],
       ),
 
-      body: Center
-      (
-        child: Text('home'),
-      )
+      body: tabs[_currentIndex],
+
+      bottomNavigationBar: BottomNavigationBar
+        (
+        currentIndex: _currentIndex,
+        //iconSize: 30.0,
+
+        items: [
+          BottomNavigationBarItem
+            (
+            icon: Icon
+              (
+              Icons.chat,
+              color: Colors.lightBlueAccent[400],
+            ),
+            title: Text
+              (
+              'Chat',
+              style: TextStyle(color: Colors.lightBlueAccent[700]),
+            ),
+            backgroundColor: Colors.blue[50],
+          ),
+          BottomNavigationBarItem
+            (
+            icon: Icon
+              (
+              Icons.border_color,
+              color: Colors.lightBlueAccent[400],
+            ),
+            title: Text
+              (
+              'Edit Profile',
+              style: TextStyle(color: Colors.lightBlueAccent[700]),
+            ),
+            backgroundColor: Colors.blue[50],
+          )
+        ],
+        onTap: (index)
+        {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
     );
   }
 }

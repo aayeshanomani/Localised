@@ -1,6 +1,6 @@
-import 'package:shared_preferences/shared_preferences.dart';
+/*import 'package:shared_preferences/shared_preferences.dart';
 
-class Helper
+class HelperFunc
 {
   static String loggedInKey = "ISLOGGEDIN";
   static String userNameKey = "USERNAMEKEY";
@@ -13,11 +13,12 @@ class Helper
     return await pref.setBool(loggedInKey, isUserLoggedIn);
   }
 
-  static Future<void> saveUsername(String username) async 
+  static Future<void> saveUsername(String username) async
   {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return await pref.setString(userNameKey, username);
   }
 
+  //get data
   
-}
+}*/

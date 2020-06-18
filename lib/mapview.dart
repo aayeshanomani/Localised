@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -18,6 +16,15 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
 
   List<Marker> allMarkers = [];
+  List<String> receivers = [];
+
+  Widget _child = Center
+  (
+    child: Text
+    (
+      'Loading...'
+    ),
+  );
 
   Widget loadMap()
   {
@@ -46,17 +53,40 @@ class _MapViewState extends State<MapView> {
                 ),
                 builder: (context) => new Container
                 (
-                  child: IconButton
+                  child: GestureDetector
                   (
-                    icon: Icon(Icons.location_on),
-                    color: Colors.lightBlueAccent[100],
-                    iconSize: 39.0,
-                    onPressed: ()
+                    child: IconButton
+                    (
+                      icon: Icon(Icons.location_on),
+                      color: Colors.lightBlueAccent[100],
+                      iconSize: 39.0,
+                      onPressed: ()
+                      {
+                        print(snapshot.data.documents[i]['name']);
+                        //showDialog(context: snapshot.data.documents[i]['name']);
+                        //showToast(snapshot.data.documents[i]['name']);
+                        final snackBar = SnackBar(
+                          content: Text("Shop: "+snapshot.data.documents[i]['name']),
+                          action: SnackBarAction(
+                            label: 'Message',
+                            onPressed: () {
+                              // Some code to undo the change.
+                              print('message');
+                            },
+                          ),
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      },
+                    ),
+                    /*onDoubleTap: ()
                     {
-                      print(snapshot.data.documents[i]['name']);
-                    }
+                      if(!receivers.contains(snapshot.data.documents[i]['name']))
+                        receivers.add(snapshot.data.documents[i]['name']);
+                      print(receivers);
+                      //showToast(snapshot.data.documents[i]['name']);
+                    },*/
                   ),
-                )
+                ),
               )
             );
           }
@@ -104,5 +134,3 @@ class _MapViewState extends State<MapView> {
     
   }
 }
-
-  

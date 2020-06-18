@@ -86,6 +86,21 @@ class _Merch_SignInState extends State<Merch_SignIn> {
                 validator: (val) => val.isEmpty ? 'Enter the Password' : null,
               ),
               SizedBox(height: 20.0,),
+              GestureDetector(
+                child: Text
+                  (
+                  "Forgot Password",
+                  style: TextStyle
+                    (
+                    color: Colors.blueGrey[50],
+                  ),
+                ),
+                onTap: ()
+                {
+
+                },
+              ),
+              SizedBox(height: 10.0,),
               RaisedButton
               (
                 color: Colors.indigoAccent,
@@ -111,6 +126,20 @@ class _Merch_SignInState extends State<Merch_SignIn> {
                       });
                     }
                   }
+                },
+              ),
+              SizedBox(height: 10.0,),
+              RaisedButton
+                (
+                color: Colors.white,
+                child: Text
+                  (
+                  'Sign in with Google',
+                  style: TextStyle(color: Colors.purple),
+                ),
+                onPressed: ()
+                {
+
                 },
               ),
               SizedBox(height: 12.0,),

@@ -30,8 +30,8 @@ dependencies:
   geolocator: ^5.3.1
   location: ^3.0.0
   flutter_map: 
-  geocoder: 
-  shared_preferences: 
+  shared_preferences: '>=0.5.1 <2.0.0'
+  
 
 dev_dependencies:
   flutter_test:

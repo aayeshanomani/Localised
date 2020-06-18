@@ -17,6 +17,7 @@ class Database
     String id,
     String searchKey,
     String name,
+    String email,
     String type,
     double latitude,
     double longitude
@@ -29,18 +30,34 @@ class Database
       'type': type,
       'latitude': latitude,
       'longitude': longitude,
+      'email': email
     });
   }
 }
 
-class DatabaseMethods
+class DatabaseChat
 {
-  createChatRoom(String chatroomId, chatroomMap)
+
+  final String name;
+
+  DatabaseChat({
+    this.name
+  });
+
+  //references
+  final CollectionReference location = Firestore.instance.collection('chatroom');
+
+  Future updateUserData
+  (
+    String name,
+    String email,
+    List receiverName
+  ) async
   {
-    Firestore.instance.collection('chatroom')
-    .document(chatroomId).setData(chatroomMap).catchError((e)
-    {
-      print(e.toString());
+    return await location.document(name).setData({
+      'name': name,
+      'email': email,
+      'receiverName': receiverName
     });
   }
 }

@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:geolocator/geolocator.dart';
-
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
-import 'package:localised/chatstate.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/model_userlocation.dart';
 import 'package:localised/searchview.dart';
@@ -15,18 +10,18 @@ import 'mapview.dart';
 
 class CustomerHome extends StatefulWidget {
   @override
-  _CustomerHomeState createState() => _CustomerHomeState();
+  CustomerHomeState createState() => CustomerHomeState();
 }
 
-class _CustomerHomeState extends State<CustomerHome> {
+class CustomerHomeState extends State<CustomerHome> {
 
-  int _currentIndex = 0;
+  int currentIndex = 0;
   Auth _auth = Auth();
 
   final tabs = [
       MapView(),
       SearchView(),
-      ChatView(),
+      Center(child: Text('Chat', style: TextStyle(color: Colors.blue[600]),),),
       Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
   ];
 
@@ -57,11 +52,11 @@ class _CustomerHomeState extends State<CustomerHome> {
         ],
       ),
 
-      body: tabs[_currentIndex],
+      body: tabs[currentIndex],
 
       bottomNavigationBar: BottomNavigationBar
       (
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
         //iconSize: 30.0,
 
         items: [
@@ -125,7 +120,7 @@ class _CustomerHomeState extends State<CustomerHome> {
         onTap: (index)
         {
           setState(() {
-            _currentIndex = index;
+            currentIndex = index;
           });
         },
       ),

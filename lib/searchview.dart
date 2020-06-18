@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localised/customer_home.dart';
 import 'package:localised/database.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/service_search.dart';
@@ -51,12 +52,6 @@ class _SearchViewState extends State<SearchView> {
         }
       });
     }
-  }
-
-  moveToChatRoom(String username)
-  {
-    List<String> Users = [username];
-    DatabaseMethods().createChatRoom(username, username);
   }
 
   @override
@@ -168,7 +163,7 @@ Widget resultCard(e)
               (
                 onTap: ()
                 {
-
+                  print("message");
                 },
                 child: Container
                 (
