@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localised/constants.dart';
+import 'package:localised/helper.dart';
 import 'package:localised/newloading.dart';
 import 'package:localised/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +34,6 @@ class _CustRegisterState extends State<CustRegister> {
   String password = "";
   String confirmPassword = "";
   String error = "";
-
-  
 
   @override
   Widget build(BuildContext context) {

@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:localised/loading.dart';
+import 'package:localised/searchview.dart';
 import 'package:provider/provider.dart';
 import 'package:latlong/latlong.dart';
 
+import 'constants.dart';
+import 'conversation.dart';
+import 'database.dart';
 import 'model_userlocation.dart';
 
 class MapView extends StatefulWidget {
@@ -70,8 +74,8 @@ class _MapViewState extends State<MapView> {
                           action: SnackBarAction(
                             label: 'Message',
                             onPressed: () {
-                              // Some code to undo the change.
                               print('message');
+                              startChat(context, snapshot.data.documents[i]['name']);
                             },
                           ),
                         );

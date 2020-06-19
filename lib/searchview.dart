@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localised/chatroom.dart';
+import 'package:localised/constants.dart';
 import 'package:localised/customer_home.dart';
 import 'package:localised/database.dart';
+import 'package:localised/helper.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/service_search.dart';
+
+import 'conversation.dart';
 
 class SearchView extends StatefulWidget {
   @override
@@ -56,6 +61,7 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
+
     return ListView
     (
       children: <Widget>
@@ -116,7 +122,7 @@ class _SearchViewState extends State<SearchView> {
           shrinkWrap: true,
           children: tempSearchStore.map((e) 
           {
-            return resultCard(e);
+            return resultCard(context, e);
           }).toList()
         )
       ],
@@ -124,7 +130,7 @@ class _SearchViewState extends State<SearchView> {
   }
 }
 
-Widget resultCard(e)
+Widget resultCard(BuildContext context, e)
 {
   return Card
   (
@@ -163,7 +169,8 @@ Widget resultCard(e)
               (
                 onTap: ()
                 {
-                  print("message");
+                  print("message "+e['name']);
+                  startChat(context, e['name']);
                 },
                 child: Container
                 (
@@ -186,4 +193,39 @@ Widget resultCard(e)
       ),
     ),
   );
+}
+
+getChatRoomId(String a, String b)
+{
+  print(a);
+  print(b);
+  if(a.substring(0,1).codeUnitAt(0) > b.substring(0,1).codeUnitAt(0))
+    {
+      return "$b\_$a";
+    }
+  else
+    {
+      return "$a\_$b";
+    }
+}
+
+startChat(BuildContext context, String username) async
+{
+
+  DatabaseMethods databaseMethods = new DatabaseMethods();
+
+  String chatRoomId = getChatRoomId(username, await HelperFunc.getUsername());
+  List<String> users = [username, await HelperFunc.getUsername()];
+  Map<String, dynamic> chatRoomMap =
+  {
+    "users": users,
+    "chatRoomId": chatRoomId
+  };
+
+  print(chatRoomMap);
+  databaseMethods.createChatRoom(chatRoomId, chatRoomMap);
+
+  Navigator.push(context, MaterialPageRoute(
+      builder: (context) => ConversationScreen()
+  ));
 }

@@ -1,9 +1,13 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localised/choice.dart';
+import 'package:localised/constants.dart';
 import 'package:localised/database.dart';
 import 'package:localised/model_userlocation.dart';
 import 'package:localised/user.dart';
+
+import 'helper.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth
@@ -39,6 +43,8 @@ class Auth
     }
   }
 
+  QuerySnapshot snapshot;
+
   //sign in email and password
   Future SignInEmailPassword(String email, String password) async
   {
@@ -46,6 +52,14 @@ class Auth
     {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+
+      HelperFunc.saveUserloggedIn(true);
+      HelperFunc.saveUserEmail(email);
+      DatabaseMethods().getUserByEmail(email)
+          .then((val){
+        snapshot = val;
+        HelperFunc.saveUsername(snapshot.documents[0].data['name']);
+      });
       return _userFromFirebase(user);
     }
     catch(e)
@@ -63,6 +77,9 @@ class Auth
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
 
+      HelperFunc.saveUserloggedIn(true);
+      HelperFunc.saveUsername(username);
+      HelperFunc.saveUserEmail(email);
       //create new document for the user with uid
       await Database(uid: user.uid).updateUserData(user.uid,username[0],username,email,"customer", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);
@@ -83,6 +100,9 @@ class Auth
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
 
+      HelperFunc.saveUserloggedIn(true);
+      HelperFunc.saveUsername(username);
+      HelperFunc.saveUserEmail(email);
       //create new document for the user with uid
       await Database(uid: user.uid).updateUserData(user.uid,username[0],username,email,"merchant", userLocation.lat, userLocation.long);
       return _userFromFirebase(user);

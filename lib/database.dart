@@ -35,29 +35,23 @@ class Database
   }
 }
 
-class DatabaseChat
+class DatabaseMethods
 {
-
-  final String name;
-
-  DatabaseChat({
-    this.name
-  });
-
-  //references
-  final CollectionReference location = Firestore.instance.collection('chatroom');
-
-  Future updateUserData
-  (
-    String name,
-    String email,
-    List receiverName
-  ) async
+  //chat
+  createChatRoom(String chatRoomId, chatRoomMap)
   {
-    return await location.document(name).setData({
-      'name': name,
-      'email': email,
-      'receiverName': receiverName
+    Firestore.instance.collection('ChatRoom')
+        .document(chatRoomId).setData(chatRoomMap).catchError((e)
+    {
+      print(e.toString());
+      print("CHATTTTT ERRORRRRRRRR");
     });
+  }
+
+  getUserByEmail(String email) async
+  {
+    return await Firestore.instance.collection('locations')
+        .where("email", isEqualTo: email)
+        .getDocuments();
   }
 }

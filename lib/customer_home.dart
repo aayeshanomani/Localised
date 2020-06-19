@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localised/chatroom.dart';
 
 import 'package:localised/loading.dart';
 import 'package:localised/model_userlocation.dart';
@@ -15,13 +16,13 @@ class CustomerHome extends StatefulWidget {
 
 class CustomerHomeState extends State<CustomerHome> {
 
-  int currentIndex = 0;
+  int currentIndex = 2;
   Auth _auth = Auth();
 
   final tabs = [
       MapView(),
       SearchView(),
-      Center(child: Text('Chat', style: TextStyle(color: Colors.blue[600]),),),
+      ChatRoom(),
       Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
   ];
 

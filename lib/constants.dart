@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:localised/database.dart';
+import 'package:localised/helper.dart';
+import 'package:localised/user.dart';
+import 'package:provider/provider.dart';
 
 const textInputDecoration = InputDecoration
 (
@@ -22,3 +26,8 @@ const textInputDecoration = InputDecoration
     ),
   ),
 );
+
+class Constants
+{
+  static String myName;
+}
