@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localised/chatroom.dart';
 import 'package:provider/provider.dart';
 
 import 'auth.dart';
@@ -16,7 +17,7 @@ class _MerchHomeState extends State<MerchHome> {
   int _currentIndex = 0;
 
   final tabs = [
-    Center(child: Text('Chat', style: TextStyle(color: Colors.blue[600]),),),
+    ChatRoom(),
     Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
   ];
 

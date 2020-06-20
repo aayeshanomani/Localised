@@ -16,7 +16,7 @@ class CustomerHome extends StatefulWidget {
 
 class CustomerHomeState extends State<CustomerHome> {
 
-  int currentIndex = 2;
+  int currentIndex = 0;
   Auth _auth = Auth();
 
   final tabs = [

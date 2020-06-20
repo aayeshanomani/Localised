@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class Database
 {
@@ -53,5 +54,40 @@ class DatabaseMethods
     return await Firestore.instance.collection('locations')
         .where("email", isEqualTo: email)
         .getDocuments();
+  }
+  
+  addMessages(String chatRoomId, messageMap)
+  {
+    print(chatRoomId);
+    Firestore.instance.collection('ChatRoom')
+        .document(chatRoomId)
+        .collection("chats")
+        .add(messageMap).catchError((e)
+    {
+      print(e.toString());
+    });
+  }
+
+  getChatRooms(String username) async
+  {
+    return await Firestore.instance.collection("ChatRoom")
+    .where("users", arrayContains: username)
+    .snapshots();
+  }
+
+  getMessages(String chatRoomId) async
+  {
+    print(chatRoomId+" get messages");
+    try{
+      return Firestore.instance.collection('ChatRoom')
+          .document(chatRoomId)
+          .collection("chats")
+          .orderBy("time", descending: false)
+          .snapshots();
+    }
+    catch(e)
+    {
+      print(e.toString());
+    }
   }
 }

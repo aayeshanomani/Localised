@@ -226,6 +226,6 @@ startChat(BuildContext context, String username) async
   databaseMethods.createChatRoom(chatRoomId, chatRoomMap);
 
   Navigator.push(context, MaterialPageRoute(
-      builder: (context) => ConversationScreen()
+      builder: (context) => ConversationScreen(chatRoomId: chatRoomId,)
   ));
 }
