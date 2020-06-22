@@ -3,6 +3,7 @@ import 'package:localised/constants.dart';
 import 'package:localised/conversation.dart';
 import 'package:localised/database.dart';
 import 'package:localised/helper.dart';
+import 'package:localised/loading.dart';
 
 class ChatRoom extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class _ChatRoomState extends State<ChatRoom> {
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
   Stream chatRooms;
+
+  bool load = false;
 
   Widget chatList()
   {

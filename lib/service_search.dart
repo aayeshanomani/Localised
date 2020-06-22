@@ -9,4 +9,18 @@ class SearchService
     .where('searchKey', isEqualTo: searchField.substring(0,1))
     .getDocuments();
   }
+
+  searchUsername(String username)
+  {
+    dynamic check;
+    check = Firestore.instance.collection('locations')
+        .getDocuments();
+    if(check != null)
+      for(int i = 0; i<check.documents.length; i++)
+        {
+          if(check.documents[i].data['name'] == username)
+            return false;
+        }
+    return true;
+  }
 }

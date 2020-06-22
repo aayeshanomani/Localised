@@ -90,4 +90,12 @@ class DatabaseMethods
       print(e.toString());
     }
   }
+
+  getCardDetails(String username) async
+  {
+    print(username+" card function");
+    return Firestore.instance.collection('Cards')
+    .where("name", isEqualTo: username)
+        .getDocuments();
+  }
 }

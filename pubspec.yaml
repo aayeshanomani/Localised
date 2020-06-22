@@ -31,6 +31,7 @@ dependencies:
   location: ^3.0.0
   flutter_map: 
   shared_preferences: '>=0.5.1 <2.0.0'
+  stripe_payment:
   
 
 dev_dependencies:

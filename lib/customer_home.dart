@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localised/chatroom.dart';
+import 'package:localised/constants.dart';
+import 'package:localised/helper.dart';
 
 import 'package:localised/loading.dart';
 import 'package:localised/model_userlocation.dart';
@@ -25,6 +27,19 @@ class CustomerHomeState extends State<CustomerHome> {
       ChatRoom(),
       Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getUserInfo();
+    super.initState();
+  }
+
+  getUserInfo() async
+  {
+    Constants.myName = await HelperFunc.getUsername();
+    print(Constants.myName);
+  }
 
   @override
   Widget build(BuildContext context) {

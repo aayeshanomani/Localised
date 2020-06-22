@@ -42,12 +42,12 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<User>(context);
     String type = "";
 
-    if(userLog == null)
+    /*if(userLog == null)
       {
-        return NewLoading();
-      }
+        return Choice();
+      }*/
     //return either home or authenticate
-    if(user == null || userLog == false)
+    if(user == null)
     {
       return StreamProvider<UserLocation>
       (
