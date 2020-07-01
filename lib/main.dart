@@ -3,6 +3,7 @@ import 'package:localised/auth.dart';
 import 'package:localised/helper.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/newloading.dart';
+import 'package:localised/onboarding.dart';
 import 'package:localised/user.dart';
 import 'package:localised/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,8 @@ class _MyAppState extends State<MyApp> {
       value: Auth().user,
       child: MaterialApp
       (
-        home: Wrapper(),
+        debugShowCheckedModeBanner: false,
+        home: OnboardingScreen(),
       ),
     );
   }

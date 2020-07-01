@@ -146,6 +146,13 @@ class _CustRegisterState extends State<CustRegister> {
                         error = "Enter a valid email";
                       });
                     }
+                    else
+                    {
+                      Navigator.pushReplacement(context, MaterialPageRoute
+                        (
+                          builder: (context) => Wrapper()
+                      ));
+                    }
                   }
                 }
               ),

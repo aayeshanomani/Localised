@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:localised/customer_register.dart';
 import 'package:localised/customer_signin.dart';
+import 'package:provider/provider.dart';
+
+import 'model_userlocation.dart';
+import 'service_location.dart';
 
 class CustAuthenticate extends StatefulWidget {
 
@@ -29,7 +33,12 @@ class _CustAuthenticateState extends State<CustAuthenticate> {
     }
     else
     {
-      return CustRegister(toggleView: toggleView,);
+      return StreamProvider<UserLocation>
+      (
+        //builder: (context) => LocationService().locationStream,
+        create: (BuildContext context) => LocationService().locationStream,
+        child: CustRegister(toggleView: toggleView,),
+      );
     }
   }
 }
