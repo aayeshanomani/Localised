@@ -6,6 +6,11 @@ import 'package:localised/helper.dart';
 import 'package:localised/loading.dart';
 
 class ChatRoom extends StatefulWidget {
+
+  final String type;
+
+  const ChatRoom({this.type});
+
   @override
   _ChatRoomState createState() => _ChatRoomState();
 }
@@ -47,7 +52,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   .toString()
                   .replaceAll("_", "")
                   .replaceAll(Constants.myName, ""),
-              chatRoomId: snapshot.data.documents[index].data['chatRoomId']);
+              chatRoomId: snapshot.data.documents[index].data['chatRoomId'], lastMessage: widget.type,);
               //: Constants.lastMessage.toString());
             }
         ) : 
@@ -171,7 +176,7 @@ class ChatTile extends StatelessWidget {
                 SizedBox(height: 5),
                 Text
                 (
-                  'Order from '+username,
+                  (lastMessage == 'customer' ? 'Place order to ' : 'Order received from ')+username ,
                   style: TextStyle
                   (
                     color: Colors.pink[900],

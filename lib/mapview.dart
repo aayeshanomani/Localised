@@ -101,7 +101,7 @@ class _MapViewState extends State<MapView> {
         (
           options: new MapOptions
           (
-            minZoom: 18.0,
+            minZoom: 10.0,
             center: new LatLng(userLocation.lat, userLocation.long),
           ),
           layers: 

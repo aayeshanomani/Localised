@@ -46,7 +46,7 @@ class _MerchHomeState extends State<MerchHome> {
   }
 
   final List<StatefulWidget> tabs = [
-    ChatRoom(),
+    ChatRoom(type: 'merchant',),
     Profile(),
   ];
 

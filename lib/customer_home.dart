@@ -27,7 +27,7 @@ class CustomerHomeState extends State<CustomerHome> {
   final List<StatefulWidget> tabs = [
       MapView(),
       SearchView(),
-      ChatRoom(),
+      ChatRoom(type: 'customer',),
       Profile(),
   ];
 

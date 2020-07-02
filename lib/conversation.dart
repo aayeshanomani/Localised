@@ -35,7 +35,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
           itemBuilder: (context, index)
           {
             return MessageTile(message: snapshot.data.documents[index].data["message"],
-                sendByMe: Constants.myName == snapshot.data.documents[index].data["sendBy"]);
+                sendByMe: Constants.myName == snapshot.data.documents[index].data["sendBy"],
+                username: username);
           },
         ):Container();
       },
@@ -55,9 +56,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
     }
   }
 
+  String username;
+
   readyChat()
   {
     print("in ready chat");
+    setState(() {
+      username = widget.chatRoomId.replaceAll("_", "")
+              .replaceAll(Constants.myName, "");
+    });
+    
     databaseMethods.getMessages(widget.chatRoomId).then((val)
     {
       if(val != null) {
@@ -78,9 +86,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 
   String message;
-
+  
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold
       (
       appBar: AppBar
@@ -89,8 +98,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         elevation: 0.0,
         title: Text
           (
-          widget.chatRoomId.replaceAll("_", "")
-              .replaceAll(Constants.myName, ""),
+          username
         ),
       ),
       body: Container
@@ -186,12 +194,14 @@ class MessageTile extends StatelessWidget {
 
   final String message;
   final bool sendByMe;
+  final String username;
 
-  const MessageTile({this.message, this.sendByMe});
+  const MessageTile({this.message, this.sendByMe, this.username});
 
   @override
   Widget build(BuildContext context) {
     setLastMessage(message);
+    print(username);
     return Container(
       padding: EdgeInsets.all(5.0),
       width: MediaQuery.of(context).size.width,
@@ -238,7 +248,7 @@ class MessageTile extends StatelessWidget {
             fontSize: 16,
           ),
         )
-      ),
+      )
     );
   }
 }

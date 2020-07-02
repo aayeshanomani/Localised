@@ -31,4 +31,5 @@ class Constants
 {
   static String myName;
   static String lastMessage;
+  static String usernameGlobal;
 }
