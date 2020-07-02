@@ -32,7 +32,8 @@ dependencies:
   flutter_map: 
   shared_preferences: '>=0.5.1 <2.0.0'
   stripe_payment:
-  
+  line_icons: ^0.2.0
+  font_awesome_flutter: 
 
 dev_dependencies:
   flutter_test:

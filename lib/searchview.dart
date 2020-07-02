@@ -62,70 +62,79 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
 
-    return ListView
-    (
-      children: <Widget>
-      [
-        Padding
-        (
-          padding: const EdgeInsets.all(10.0),
-          child: TextField
+    return Scaffold(
+      appBar: AppBar
+      (
+        title: Text('Search',
+        style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.red[50],
+        elevation: 0.0,
+      ),
+      body: ListView
+      (
+        children: <Widget>
+        [
+          Padding
           (
-            style: TextStyle(color: Colors.blueAccent[100]),
-            onChanged: (value) {
-              initiateSearch(value);
-            },
-            decoration: InputDecoration
+            padding: const EdgeInsets.all(10.0),
+            child: TextField
             (
-              prefixIcon: IconButton
+              style: TextStyle(color: Colors.blueAccent[100]),
+              onChanged: (value) {
+                initiateSearch(value);
+              },
+              decoration: InputDecoration
               (
-                color: Colors.blue[400],
-                icon: Icon(Icons.arrow_back, color: Colors.blue[500],), 
-                iconSize: 20.0,
-                onPressed: ()
-                {
-                  Navigator.of(context).pop();
-                }
-              ),
-              contentPadding: EdgeInsets.all(25.0),
-              hintText: 'Search Shop By Name',
-              hintStyle: TextStyle(color: Colors.blue[700]),
-              enabledBorder: OutlineInputBorder
-              (
-                borderSide: BorderSide
+                prefixIcon: IconButton
                 (
-                  color: Colors.blue[700],
-                  width: 2.0,
+                  color: Colors.blue[400],
+                  icon: Icon(Icons.arrow_back, color: Colors.blue[500],), 
+                  iconSize: 20.0,
+                  onPressed: ()
+                  {
+                    Navigator.of(context).pop();
+                  }
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(40.0)),
-              ),
-              focusedBorder: OutlineInputBorder
-              (
-                borderSide: BorderSide
+                contentPadding: EdgeInsets.all(25.0),
+                hintText: 'Search Shop By Name',
+                hintStyle: TextStyle(color: Colors.blue[700]),
+                enabledBorder: OutlineInputBorder
                 (
-                  color: Colors.blue[800],
-                  width: 2.0,
+                  borderSide: BorderSide
+                  (
+                    color: Colors.blue[700],
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                ),
+                focusedBorder: OutlineInputBorder
+                (
+                  borderSide: BorderSide
+                  (
+                    color: Colors.blue[800],
+                    width: 2.0,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
 
-        SizedBox(height: 20.0,),
-        GridView.count
-        (
-          crossAxisCount: 2,
-          padding: EdgeInsets.only(left: 10.0, right:10.0),
-          crossAxisSpacing: 4.0,
-          mainAxisSpacing: 4.0,
-          primary: false,
-          shrinkWrap: true,
-          children: tempSearchStore.map((e) 
-          {
-            return resultCard(context, e);
-          }).toList()
-        )
-      ],
+          SizedBox(height: 20.0,),
+          GridView.count
+          (
+            crossAxisCount: 2,
+            padding: EdgeInsets.only(left: 10.0, right:10.0),
+            crossAxisSpacing: 4.0,
+            mainAxisSpacing: 4.0,
+            primary: false,
+            shrinkWrap: true,
+            children: tempSearchStore.map((e) 
+            {
+              return resultCard(context, e);
+            }).toList()
+          )
+        ],
+      ),
     );
   }
 }

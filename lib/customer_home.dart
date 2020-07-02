@@ -48,7 +48,7 @@ class CustomerHomeState extends State<CustomerHome> {
     return userLocation == null ? Loading() : Scaffold
     (
       backgroundColor: Colors.black,
-      appBar: AppBar
+      /*appBar: AppBar
       (
         title: Text('Home',
         style: TextStyle(color: Colors.black)),
@@ -66,7 +66,7 @@ class CustomerHomeState extends State<CustomerHome> {
             },
           )
         ],
-      ),
+      ),*/
 
       body: tabs[currentIndex],
 
