@@ -24,7 +24,7 @@ class _MerchAuthenticateState extends State<MerchAuthenticate> {
   Widget build(BuildContext context) {
     if(showSignIn)
     {
-      return Merch_SignIn(toggleView: toggleView);
+      return MerchantSignIn(toggleView: toggleView);
     }
     else
     {

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localised/chatroom.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/helper.dart';
 
 import 'package:localised/loading.dart';
 import 'package:localised/model_userlocation.dart';
+import 'package:localised/profile.dart';
 import 'package:localised/searchview.dart';
 import 'package:provider/provider.dart';
 
@@ -21,11 +24,11 @@ class CustomerHomeState extends State<CustomerHome> {
   int currentIndex = 0;
   Auth _auth = Auth();
 
-  final tabs = [
+  final List<StatefulWidget> tabs = [
       MapView(),
       SearchView(),
       ChatRoom(),
-      Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
+      Profile(),
   ];
 
   @override
@@ -43,6 +46,10 @@ class CustomerHomeState extends State<CustomerHome> {
 
   @override
   Widget build(BuildContext context) {
+    
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.redAccent),
+    );
     
     var userLocation = Provider.of<UserLocation>(context);
     return userLocation == null ? Loading() : Scaffold
@@ -80,57 +87,57 @@ class CustomerHomeState extends State<CustomerHome> {
           (
             icon: Icon
             (
-              Icons.map,
-              color: Colors.lightBlueAccent[400],
+              FontAwesomeIcons.mapMarkedAlt,
+              color: Colors.pinkAccent[400],
             ),
             title: Text
             (
               'Near You',
-              style: TextStyle(color: Colors.lightBlueAccent[700]),
+              style: TextStyle(color: Colors.pinkAccent[700]),
             ),
-            backgroundColor: Colors.blue[50],
+            backgroundColor: Colors.pink[50],
           ),
           BottomNavigationBarItem
           (
             icon: Icon
             (
-              Icons.search,
-              color: Colors.lightBlueAccent[400],
+              FontAwesomeIcons.searchLocation,
+              color: Colors.pinkAccent[400],
             ),
             title: Text
             (
               'Search',
-              style: TextStyle(color: Colors.lightBlueAccent[700]),
+              style: TextStyle(color: Colors.pinkAccent[700]),
             ),
-            backgroundColor: Colors.blue[50],
+            backgroundColor: Colors.pink[50],
           ),
           BottomNavigationBarItem
           (
             icon: Icon
             (
-              Icons.chat,
-              color: Colors.lightBlueAccent[400],
+              FontAwesomeIcons.shoppingBasket,
+              color: Colors.pinkAccent[400],
             ),
             title: Text
             (
               'Chat',
-              style: TextStyle(color: Colors.lightBlueAccent[700]),
+              style: TextStyle(color: Colors.pinkAccent[700]),
             ),
-            backgroundColor: Colors.blue[50],
+            backgroundColor: Colors.pink[50],
           ),
           BottomNavigationBarItem
           (
             icon: Icon
             (
-              Icons.settings,
-              color: Colors.lightBlueAccent[400],
+              FontAwesomeIcons.personBooth,
+              color: Colors.pinkAccent[400],
             ),
             title: Text
             (
               'Settings',
-              style: TextStyle(color: Colors.lightBlueAccent[700]),
+              style: TextStyle(color: Colors.pinkAccent[700]),
             ),
-            backgroundColor: Colors.blue[50],
+            backgroundColor: Colors.pink[50],
           )
         ],
         onTap: (index)

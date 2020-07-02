@@ -30,4 +30,5 @@ const textInputDecoration = InputDecoration
 class Constants
 {
   static String myName;
+  static String lastMessage;
 }

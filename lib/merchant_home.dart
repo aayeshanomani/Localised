@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localised/chatroom.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/database.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/payment.dart';
+import 'package:localised/profile.dart';
 import 'package:provider/provider.dart';
 
 import 'auth.dart';
@@ -40,12 +42,12 @@ class _MerchHomeState extends State<MerchHome> {
   {
     Constants.myName = await HelperFunc.getUsername();
     print(Constants.myName);
-    card = databaseMethods.getCardDetails(Constants.myName);
+    //card = databaseMethods.getCardDetails(Constants.myName);
   }
 
-  final tabs = [
+  final List<StatefulWidget> tabs = [
     ChatRoom(),
-    Center(child: Text('Settings', style: TextStyle(color: Colors.blue[600]),),),
+    Profile(),
   ];
 
   @override
@@ -57,7 +59,7 @@ class _MerchHomeState extends State<MerchHome> {
       return Scaffold
         (
         backgroundColor: Colors.black,
-        appBar: AppBar
+        /*appBar: AppBar
           (
           title: Text('Home',
               style: TextStyle(color: Colors.black)),
@@ -75,7 +77,7 @@ class _MerchHomeState extends State<MerchHome> {
               },
             )
           ],
-        ),
+        ),*/
 
         body: tabs[_currentIndex],
 
@@ -89,29 +91,31 @@ class _MerchHomeState extends State<MerchHome> {
               (
               icon: Icon
                 (
-                Icons.chat,
-                color: Colors.lightBlueAccent[400],
+                FontAwesomeIcons.list,
+                color: Colors.pinkAccent[400],
+                size: _currentIndex == 0 ? 20 : 25,
               ),
               title: Text
                 (
                 'Chat',
-                style: TextStyle(color: Colors.lightBlueAccent[700]),
+                style: TextStyle(color: _currentIndex==0 ? Colors.pinkAccent[700] : Colors.transparent),
               ),
-              backgroundColor: Colors.blue[50],
+              backgroundColor: Colors.red[200],
             ),
             BottomNavigationBarItem
               (
               icon: Icon
                 (
-                Icons.border_color,
-                color: Colors.lightBlueAccent[400],
+                FontAwesomeIcons.edit,
+                color: Colors.pinkAccent[400],
+                size: _currentIndex == 1 ? 20 : 25,
               ),
               title: Text
                 (
                 'Edit Profile',
-                style: TextStyle(color: Colors.lightBlueAccent[700]),
+                style: TextStyle(color: _currentIndex==1 ? Colors.pinkAccent[700] : Colors.transparent),
               ),
-              backgroundColor: Colors.blue[50],
+              backgroundColor: Colors.red[200],
             )
           ],
           onTap: (index) {

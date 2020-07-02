@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/database.dart';
 import 'package:localised/helper.dart';
@@ -84,7 +85,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
       (
       appBar: AppBar
         (
-        backgroundColor: Colors.blueGrey[100],
+        backgroundColor: Colors.red[200],
         elevation: 0.0,
         title: Text
           (
@@ -94,7 +95,20 @@ class _ConversationScreenState extends State<ConversationScreen> {
       ),
       body: Container
         (
-        color: Colors.grey[350],
+        decoration: new BoxDecoration
+        (
+          gradient: new LinearGradient
+          (
+              colors: [
+                Color(0xFFFFFFFF),
+                Color(0xFFFFFFFF),
+                Color(0xFFEF9A9A)
+              ],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 1.0),
+              stops: [0.0, 0.5 ,1.0],
+              tileMode: TileMode.clamp),
+        ),
         child: Stack
           (
           children:
@@ -117,7 +131,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 child: TextField
                   (
                   controller: textEditingController,
-                  style: TextStyle(color: Colors.blueAccent[100]),
+                  style: TextStyle(color: Colors.red[700]),
                   onChanged: (value) {
                     //initiateSearch(value);
                     message = value;
@@ -126,8 +140,8 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     (
                     suffixIcon: IconButton
                       (
-                        color: Colors.blue[400],
-                        icon: Icon(Icons.send, color: Colors.blue[500],),
+                        color: Colors.red[400],
+                        icon: Icon(FontAwesomeIcons.arrowAltCircleRight, color: Colors.pink[500],),
                         iconSize: 30.0,
                         onPressed: () {
                           sendMessage(message);
@@ -135,21 +149,21 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     ),
                     contentPadding: EdgeInsets.all(25.0),
                     hintText: 'Type your message',
-                    hintStyle: TextStyle(color: Colors.blue[700]),
+                    hintStyle: TextStyle(color: Colors.red[700]),
                     enabledBorder: OutlineInputBorder
                       (
                       borderSide: BorderSide
                         (
-                        color: Colors.blue[700],
+                        color: Colors.pink[700],
                         width: 2.0,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(140.0)),
                     ),
                     focusedBorder: OutlineInputBorder
                       (
                       borderSide: BorderSide
                         (
-                        color: Colors.blue[800],
+                        color: Colors.red[800],
                         width: 2.0,
                       ),
                     ),
@@ -163,6 +177,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 }
 
+setLastMessage(message)
+{
+  Constants.lastMessage = message.toString();
+}
 
 class MessageTile extends StatelessWidget {
 
@@ -173,6 +191,7 @@ class MessageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    setLastMessage(message);
     return Container(
       padding: EdgeInsets.all(5.0),
       width: MediaQuery.of(context).size.width,
@@ -181,40 +200,44 @@ class MessageTile extends StatelessWidget {
         (
         margin: sendByMe
             ? EdgeInsets.only(left: 70)
-            : EdgeInsets.only(right: 50),
-        padding: EdgeInsets.all(11),
+            : EdgeInsets.only(right: 70),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration
           (
           gradient: LinearGradient
             (
             colors: sendByMe ?
             [
-              Colors.blueGrey[900],
-              Colors.blueGrey[800]
+              Colors.red[900],
+              Colors.red[800]
             ] :
                 [
-                  Colors.brown[50],
-                  Colors.brown[100]
+                  Colors.grey[600],
+                  Colors.grey[700]
                 ]
           ),
           borderRadius: sendByMe ? BorderRadius.only
             (
-            topLeft: Radius.circular(26.0),
-                topRight: Radius.circular(37),
-              bottomLeft: Radius.circular(45)
+            topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              bottomLeft: Radius.circular(15)
           ):
               BorderRadius.only
                 (
-                topRight: Radius.circular(38.0),
-                topLeft: Radius.circular(37),
-                bottomRight: Radius.circular(82)
+                topRight: Radius.circular(15.0),
+                topLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15)
               )
         ),
         child: Text
           (
           message,
-          style: TextStyle(color: sendByMe ? Colors.blueGrey[200] : Colors.black),
-        ),
+          style: TextStyle
+          (
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        )
       ),
     );
   }

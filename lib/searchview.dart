@@ -66,74 +66,76 @@ class _SearchViewState extends State<SearchView> {
       appBar: AppBar
       (
         title: Text('Search',
-        style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.red[50],
-        elevation: 0.0,
+        style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red[200],
+        elevation: 1.0,
       ),
-      body: ListView
-      (
-        children: <Widget>
-        [
-          Padding
-          (
-            padding: const EdgeInsets.all(10.0),
-            child: TextField
+      body: Container(
+        child: ListView
+        (
+          children: <Widget>
+          [
+            Padding
             (
-              style: TextStyle(color: Colors.blueAccent[100]),
-              onChanged: (value) {
-                initiateSearch(value);
-              },
-              decoration: InputDecoration
+              padding: const EdgeInsets.all(10.0),
+              child: TextField
               (
-                prefixIcon: IconButton
+                style: TextStyle(color: Colors.pinkAccent[100]),
+                onChanged: (value) {
+                  initiateSearch(value);
+                },
+                decoration: InputDecoration
                 (
-                  color: Colors.blue[400],
-                  icon: Icon(Icons.arrow_back, color: Colors.blue[500],), 
-                  iconSize: 20.0,
-                  onPressed: ()
-                  {
-                    Navigator.of(context).pop();
-                  }
-                ),
-                contentPadding: EdgeInsets.all(25.0),
-                hintText: 'Search Shop By Name',
-                hintStyle: TextStyle(color: Colors.blue[700]),
-                enabledBorder: OutlineInputBorder
-                (
-                  borderSide: BorderSide
+                  prefixIcon: IconButton
                   (
-                    color: Colors.blue[700],
-                    width: 2.0,
+                    color: Colors.pink[400],
+                    icon: Icon(Icons.arrow_back, color: Colors.pink[500],), 
+                    iconSize: 20.0,
+                    onPressed: ()
+                    {
+                      Navigator.of(context).pop();
+                    }
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                ),
-                focusedBorder: OutlineInputBorder
-                (
-                  borderSide: BorderSide
+                  contentPadding: EdgeInsets.all(25.0),
+                  hintText: 'Search Shop By Name',
+                  hintStyle: TextStyle(color: Colors.pink[700]),
+                  enabledBorder: OutlineInputBorder
                   (
-                    color: Colors.blue[800],
-                    width: 2.0,
+                    borderSide: BorderSide
+                    (
+                      color: Colors.pink[700],
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                  ),
+                  focusedBorder: OutlineInputBorder
+                  (
+                    borderSide: BorderSide
+                    (
+                      color: Colors.pink[800],
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
-          SizedBox(height: 20.0,),
-          GridView.count
-          (
-            crossAxisCount: 2,
-            padding: EdgeInsets.only(left: 10.0, right:10.0),
-            crossAxisSpacing: 4.0,
-            mainAxisSpacing: 4.0,
-            primary: false,
-            shrinkWrap: true,
-            children: tempSearchStore.map((e) 
-            {
-              return resultCard(context, e);
-            }).toList()
-          )
-        ],
+            SizedBox(height: 20.0,),
+            GridView.count
+            (
+              crossAxisCount: 2,
+              padding: EdgeInsets.only(left: 10.0, right:10.0),
+              crossAxisSpacing: 4.0,
+              mainAxisSpacing: 4.0,
+              primary: false,
+              shrinkWrap: true,
+              children: tempSearchStore.map((e) 
+              {
+                return resultCard(context, e);
+              }).toList()
+            )
+          ],
+        ),
       ),
     );
   }
@@ -147,7 +149,7 @@ Widget resultCard(BuildContext context, e)
     (
       borderRadius: BorderRadius.circular(30.0),
     ),
-    color: Colors.indigo[100],
+    color: Colors.red[100],
     elevation: 3.0,
     child: Container
     (
@@ -185,14 +187,14 @@ Widget resultCard(BuildContext context, e)
                 (
                   decoration: BoxDecoration
                   (
-                    color: Colors.indigo[200],
+                    color: Colors.red[400],
                     borderRadius: BorderRadius.circular(29.0)
                   ),
                   padding: EdgeInsets.all(10.0),
                   child: Text
                   (
                     'Message',
-                    style: TextStyle(color: Colors.indigo[300]),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),

@@ -25,6 +25,19 @@ class _ChatRoomState extends State<ChatRoom> {
       stream: chatRooms,
       builder: (context, snapshot)
       {
+        if(snapshot.data.documents.length == 0)
+        {
+          return Container
+          (
+            child: Center
+            (
+              child: Text
+              (
+                'It\'s all empty here'
+              ),
+            ),
+          );
+        }
         return snapshot.hasData ? ListView.builder
           (
           itemCount: snapshot.data.documents.length,
@@ -34,9 +47,20 @@ class _ChatRoomState extends State<ChatRoom> {
                   .toString()
                   .replaceAll("_", "")
                   .replaceAll(Constants.myName, ""),
-              chatRoomId: snapshot.data.documents[index].data['chatRoomId'],);
+              chatRoomId: snapshot.data.documents[index].data['chatRoomId']);
+              //: Constants.lastMessage.toString());
             }
-        ) : Container();
+        ) : 
+        Container
+        (
+          child: Center
+          (
+            child: Text
+            (
+              'It\'s all empty here'
+            ),
+          ),
+        );
       },
     );
   }
@@ -62,15 +86,31 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
-    return chatList();
+    return Scaffold
+    (
+      appBar: AppBar
+      (
+        backgroundColor: Colors.red[200],
+        elevation: 0.0,
+        title: Text
+        (
+          'Orders',
+        )
+      ),
+      body: Container
+      (
+        child: chatList()
+      )
+    );
   }
 }
 
 class ChatTile extends StatelessWidget {
   final String username;
   final String chatRoomId;
+  final String lastMessage;
 
-  const ChatTile({ this.username, this.chatRoomId});
+  const ChatTile({ this.username, this.chatRoomId, this.lastMessage});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -83,9 +123,14 @@ class ChatTile extends StatelessWidget {
       },
       child: Container
         (
+          decoration: BoxDecoration
+          (
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15)
+          ),
         margin: EdgeInsets.all(10),
-        color: Colors.brown[600],
-        padding: EdgeInsets.all(10),
+        //color: Colors.white,
+        padding: EdgeInsets.all(20),
         child: Row
           (
           children: <Widget>
@@ -96,18 +141,45 @@ class ChatTile extends StatelessWidget {
               width: 40,
               decoration: BoxDecoration
                 (
-                color: Colors.brown[200],
+                color: Colors.pink[200],
                 borderRadius: BorderRadius.circular(78)
               ),
               child: Center(
                 child: Text
                   (
-                    username.substring(0,1).toUpperCase()
+                    username.substring(0,1).toUpperCase(),
+                    style: TextStyle
+                    (
+                      color: Colors.white,
+                      fontSize: 18
+                    ),
                 ),
               ),
             ),
             SizedBox(width: 8.0,),
-            Text(username, style: TextStyle(color: Colors.brown[300]),)
+            Column(
+              children: <Widget>[
+                Text
+                (
+                  username, 
+                  style: TextStyle
+                  (
+                    color: Colors.red[300],
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text
+                (
+                  'Order from '+username,
+                  style: TextStyle
+                  (
+                    color: Colors.pink[900],
+                    fontSize: 11,
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/searchview.dart';
 import 'package:provider/provider.dart';
@@ -61,9 +62,9 @@ class _MapViewState extends State<MapView> {
                   (
                     child: IconButton
                     (
-                      icon: Icon(Icons.location_on),
-                      color: Colors.lightBlueAccent[100],
-                      iconSize: 39.0,
+                      icon: Icon(FontAwesomeIcons.mapPin),
+                      color: Colors.pinkAccent[100],
+                      iconSize: 30.0,
                       onPressed: ()
                       {
                         print(snapshot.data.documents[i]['name']);
@@ -100,7 +101,7 @@ class _MapViewState extends State<MapView> {
         (
           options: new MapOptions
           (
-            minZoom: 10.0,
+            minZoom: 18.0,
             center: new LatLng(userLocation.lat, userLocation.long),
           ),
           layers: 
