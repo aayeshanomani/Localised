@@ -81,6 +81,7 @@ class CustomerHomeState extends State<CustomerHome> {
       (
         currentIndex: currentIndex,
         //iconSize: 30.0,
+        elevation: 2.0,
 
         items: [
           BottomNavigationBarItem
@@ -88,56 +89,56 @@ class CustomerHomeState extends State<CustomerHome> {
             icon: Icon
             (
               FontAwesomeIcons.mapMarkedAlt,
-              color: Colors.pinkAccent[400],
+              color: Colors.white,
             ),
             title: Text
             (
               'Near You',
-              style: TextStyle(color: Colors.pinkAccent[700]),
+              style: TextStyle(color: Colors.white),
             ),
-            backgroundColor: Colors.pink[50],
+            backgroundColor: Colors.redAccent,
           ),
           BottomNavigationBarItem
           (
             icon: Icon
             (
               FontAwesomeIcons.searchLocation,
-              color: Colors.pinkAccent[400],
+              color: Colors.white,
             ),
             title: Text
             (
               'Search',
-              style: TextStyle(color: Colors.pinkAccent[700]),
+              style: TextStyle(color: Colors.white),
             ),
-            backgroundColor: Colors.pink[50],
+            backgroundColor: Colors.redAccent,
           ),
           BottomNavigationBarItem
           (
             icon: Icon
             (
               FontAwesomeIcons.shoppingBasket,
-              color: Colors.pinkAccent[400],
+              color: Colors.white,
             ),
             title: Text
             (
               'Chat',
-              style: TextStyle(color: Colors.pinkAccent[700]),
+              style: TextStyle(color: Colors.white),
             ),
-            backgroundColor: Colors.pink[50],
+            backgroundColor: Colors.redAccent,
           ),
           BottomNavigationBarItem
           (
             icon: Icon
             (
               FontAwesomeIcons.personBooth,
-              color: Colors.pinkAccent[400],
+              color: Colors.white,
             ),
             title: Text
             (
               'Settings',
-              style: TextStyle(color: Colors.pinkAccent[700]),
+              style: TextStyle(color: Colors.white),
             ),
-            backgroundColor: Colors.pink[50],
+            backgroundColor: Colors.redAccent,
           )
         ],
         onTap: (index)

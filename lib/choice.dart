@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localised/customer_home.dart';
 import 'package:localised/customer_signin.dart';
-import 'package:localised/merchant_authenticate.dart';
-import 'package:localised/merchant_register.dart';
+import 'package:localised/merchant_signin.dart';
 import 'package:localised/user.dart';
 import 'package:localised/utils/colors.dart';
 import 'package:localised/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-import 'customer_authenticate.dart';
 
 class Choice extends StatefulWidget {
   @override
@@ -23,7 +21,7 @@ class _ChoiceState extends State<Choice> {
   Widget build(BuildContext context) {
 
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.redAccent),
+      SystemUiOverlayStyle(statusBarColor: Colors.red[900]),
     );
 
     final logo = Container(
@@ -132,11 +130,11 @@ class _ChoiceState extends State<Choice> {
 
     if(type == "customer")
     {
-      return CustAuthenticate();
+      return Cust_SignIn();
     }
     if(type == "merchant")
     {
-      return MerchAuthenticate();
+      return MerchantSignIn();
     }
 
     return Scaffold(

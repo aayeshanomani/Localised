@@ -17,7 +17,7 @@ class _ProfileState extends State<Profile> {
       (
         title: Text('Profile',
         style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.red[200],
+        backgroundColor: Colors.redAccent,
         elevation: 0.0,
         actions: <Widget>
         [

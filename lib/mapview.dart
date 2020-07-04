@@ -62,9 +62,20 @@ class _MapViewState extends State<MapView> {
                   (
                     child: IconButton
                     (
-                      icon: Icon(FontAwesomeIcons.mapPin),
-                      color: Colors.pinkAccent[100],
-                      iconSize: 30.0,
+                      icon: Stack
+                      (
+                        children: <Widget>
+                        [
+                          Positioned(
+                            left: 2.0,
+                            top: 2.0,
+                            child: Icon(Icons.home, color: Colors.black54),
+                          ),
+                          Icon(Icons.home)
+                        ],
+                      ),
+                      color: Colors.redAccent,
+                      iconSize: 35.0,
                       onPressed: ()
                       {
                         print(snapshot.data.documents[i]['name']);
@@ -101,7 +112,7 @@ class _MapViewState extends State<MapView> {
         (
           options: new MapOptions
           (
-            minZoom: 10.0,
+            minZoom: 16.0,
             center: new LatLng(userLocation.lat, userLocation.long),
           ),
           layers: 

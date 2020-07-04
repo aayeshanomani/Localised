@@ -67,8 +67,8 @@ class _SearchViewState extends State<SearchView> {
       (
         title: Text('Search',
         style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.red[200],
-        elevation: 1.0,
+        backgroundColor: Colors.redAccent,
+        elevation: 6.0,
       ),
       body: Container(
         child: ListView
@@ -80,7 +80,7 @@ class _SearchViewState extends State<SearchView> {
               padding: const EdgeInsets.all(10.0),
               child: TextField
               (
-                style: TextStyle(color: Colors.pinkAccent[100]),
+                style: TextStyle(color: Colors.redAccent),
                 onChanged: (value) {
                   initiateSearch(value);
                 },
@@ -88,8 +88,8 @@ class _SearchViewState extends State<SearchView> {
                 (
                   prefixIcon: IconButton
                   (
-                    color: Colors.pink[400],
-                    icon: Icon(Icons.arrow_back, color: Colors.pink[500],), 
+                    color: Colors.redAccent,
+                    icon: Icon(Icons.arrow_back, color: Colors.redAccent,), 
                     iconSize: 20.0,
                     onPressed: ()
                     {
@@ -98,12 +98,12 @@ class _SearchViewState extends State<SearchView> {
                   ),
                   contentPadding: EdgeInsets.all(25.0),
                   hintText: 'Search Shop By Name',
-                  hintStyle: TextStyle(color: Colors.pink[700]),
+                  hintStyle: TextStyle(color: Colors.redAccent),
                   enabledBorder: OutlineInputBorder
                   (
                     borderSide: BorderSide
                     (
-                      color: Colors.pink[700],
+                      color: Colors.redAccent,
                       width: 2.0,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -112,7 +112,7 @@ class _SearchViewState extends State<SearchView> {
                   (
                     borderSide: BorderSide
                     (
-                      color: Colors.pink[800],
+                      color: Colors.redAccent,
                       width: 2.0,
                     ),
                   ),

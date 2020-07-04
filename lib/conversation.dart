@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/database.dart';
@@ -94,15 +95,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
       (
       appBar: AppBar
         (
-        backgroundColor: Colors.red[200],
-        elevation: 0.0,
+        backgroundColor: Colors.redAccent,
+        elevation: 50.0,
         title: Text
-          (
+        (
           username
         ),
       ),
       body: Container
-        (
+      (
+        //padding: EdgeInsets.only(top: 20),
         decoration: new BoxDecoration
         (
           gradient: new LinearGradient
@@ -118,7 +120,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
               tileMode: TileMode.clamp),
         ),
         child: Stack
-          (
+        (
           children:
           [
             Center(
@@ -126,7 +128,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                 (
                 padding: EdgeInsets.only
                   (
-                  bottom: 100
+                  bottom: 75
                 ),
                   child: Messages()
               ),
@@ -134,35 +136,41 @@ class _ConversationScreenState extends State<ConversationScreen> {
             SizedBox(height: 10.0,),
             Container(
               //color: Colors.grey[100],
-              alignment: Alignment.bottomCenter,
+                alignment: Alignment.bottomCenter,
                 padding: EdgeInsets.all(10),
                 child: TextField
                   (
                   controller: textEditingController,
-                  style: TextStyle(color: Colors.red[700]),
+                  style: TextStyle
+                  (
+                    color: Colors.white,
+                    //backgroundColor: Colors.redAccent
+                  ),
                   onChanged: (value) {
                     //initiateSearch(value);
                     message = value;
                   },
                   decoration: InputDecoration
                     (
+                      fillColor: Colors.redAccent,
+                      filled: true,
                     suffixIcon: IconButton
                       (
                         color: Colors.red[400],
-                        icon: Icon(FontAwesomeIcons.arrowAltCircleRight, color: Colors.pink[500],),
+                        icon: Icon(FontAwesomeIcons.arrowAltCircleRight, color: Colors.white,),
                         iconSize: 30.0,
                         onPressed: () {
                           sendMessage(message);
                         }
                     ),
-                    contentPadding: EdgeInsets.all(25.0),
+                    contentPadding: EdgeInsets.all(17.0),
                     hintText: 'Type your message',
-                    hintStyle: TextStyle(color: Colors.red[700]),
+                    hintStyle: TextStyle(color: Colors.white),
                     enabledBorder: OutlineInputBorder
                       (
                       borderSide: BorderSide
                         (
-                        color: Colors.pink[700],
+                        color: Colors.white,
                         width: 2.0,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(140.0)),
@@ -171,9 +179,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       (
                       borderSide: BorderSide
                         (
-                        color: Colors.red[800],
+                        color: Colors.white,
                         width: 2.0,
                       ),
+                      borderRadius: BorderRadius.all(Radius.circular(140.0)),
                     ),
                   ),
                 ),
@@ -218,12 +227,12 @@ class MessageTile extends StatelessWidget {
             (
             colors: sendByMe ?
             [
-              Colors.red[900],
-              Colors.red[800]
+              Colors.redAccent[100],
+              Colors.redAccent[100]
             ] :
                 [
                   Colors.grey[600],
-                  Colors.grey[700]
+                  Colors.grey[600]
                 ]
           ),
           borderRadius: sendByMe ? BorderRadius.only

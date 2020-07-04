@@ -95,7 +95,7 @@ class _ChatRoomState extends State<ChatRoom> {
     (
       appBar: AppBar
       (
-        backgroundColor: Colors.red[200],
+        backgroundColor: Colors.redAccent,
         elevation: 0.0,
         title: Text
         (
@@ -103,9 +103,9 @@ class _ChatRoomState extends State<ChatRoom> {
         )
       ),
       body: Container
-      (
-        child: chatList()
-      )
+        (
+          child: chatList()
+        ),
     );
   }
 }
@@ -146,7 +146,7 @@ class ChatTile extends StatelessWidget {
               width: 40,
               decoration: BoxDecoration
                 (
-                color: Colors.pink[200],
+                color: Colors.redAccent,
                 borderRadius: BorderRadius.circular(78)
               ),
               child: Center(
@@ -164,13 +164,16 @@ class ChatTile extends StatelessWidget {
             SizedBox(width: 8.0,),
             Column(
               children: <Widget>[
-                Text
-                (
-                  username, 
-                  style: TextStyle
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Text
                   (
-                    color: Colors.red[300],
-                    fontSize: 20,
+                    username, 
+                    style: TextStyle
+                    (
+                      color: Colors.redAccent[100],
+                      fontSize: 20,
+                    ),
                   ),
                 ),
                 SizedBox(height: 5),
@@ -179,7 +182,7 @@ class ChatTile extends StatelessWidget {
                   (lastMessage == 'customer' ? 'Place order to ' : 'Order received from ')+username ,
                   style: TextStyle
                   (
-                    color: Colors.pink[900],
+                    color: Colors.redAccent[700],
                     fontSize: 11,
                   ),
                 )

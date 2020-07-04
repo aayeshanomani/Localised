@@ -85,37 +85,37 @@ class _MerchHomeState extends State<MerchHome> {
           (
           currentIndex: _currentIndex,
           //iconSize: 30.0,
-
+          backgroundColor: Colors.redAccent,
           items: [
             BottomNavigationBarItem
-              (
+            (
               icon: Icon
-                (
-                FontAwesomeIcons.list,
-                color: Colors.pinkAccent[400],
+              (
+                FontAwesomeIcons.shoppingBasket,
+                color: Colors.white,
                 size: _currentIndex == 0 ? 20 : 25,
               ),
               title: Text
-                (
+              (
                 'Chat',
-                style: TextStyle(color: _currentIndex==0 ? Colors.pinkAccent[700] : Colors.transparent),
+                style: TextStyle(color: _currentIndex == 0 ? Colors.white : Colors.transparent),
               ),
-              backgroundColor: Colors.red[200],
+              backgroundColor: Colors.redAccent,
             ),
             BottomNavigationBarItem
-              (
+            (
               icon: Icon
-                (
-                FontAwesomeIcons.edit,
-                color: Colors.pinkAccent[400],
+              (
+                FontAwesomeIcons.personBooth,
+                color: Colors.white,
                 size: _currentIndex == 1 ? 20 : 25,
               ),
               title: Text
-                (
-                'Edit Profile',
-                style: TextStyle(color: _currentIndex==1 ? Colors.pinkAccent[700] : Colors.transparent),
+              (
+                'Settings',
+                style: TextStyle(color: _currentIndex == 1 ? Colors.white : Colors.transparent),
               ),
-              backgroundColor: Colors.red[200],
+              backgroundColor: Colors.redAccent,
             )
           ],
           onTap: (index) {

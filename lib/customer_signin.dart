@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localised/auth.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/customer_home.dart';
-import 'package:localised/customer_register.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/utils/painter.dart';
 import 'package:localised/utils/theme.dart' as Theme;

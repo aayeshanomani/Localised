@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:localised/auth.dart';
+import 'package:localised/conversation.dart';
 import 'package:localised/helper.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/newloading.dart';
 import 'package:localised/onboarding.dart';
+import 'package:localised/splash.dart';
 import 'package:localised/user.dart';
 import 'package:localised/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp
       (
         debugShowCheckedModeBanner: false,
-        home: OnboardingScreen(),
+        home: SplashScreen(),
       ),
     );
   }
