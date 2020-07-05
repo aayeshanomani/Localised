@@ -55,6 +55,14 @@ class DatabaseMethods
         .where("email", isEqualTo: email)
         .getDocuments();
   }
+
+  Future<bool> usernameCheck(String username) async {
+    final result = await Firestore.instance
+        .collection('locations')
+        .where('name', isEqualTo: username)
+        .getDocuments();
+    return result.documents.isEmpty;
+  }
   
   addMessages(String chatRoomId, messageMap)
   {

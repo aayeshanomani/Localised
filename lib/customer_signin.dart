@@ -498,7 +498,7 @@ class _Cust_SignInState extends State<Cust_SignIn> {
 
   Widget _buildSignUp(BuildContext context) {
     var userLocation = Provider.of<UserLocation>(context);
-    return Container(
+    return loading ? Loading(): Container(
       padding: EdgeInsets.only(top: 23.0),
       child: Column(
         children: <Widget>[

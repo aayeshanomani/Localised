@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:localised/auth.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/customer_home.dart';
+import 'package:localised/database.dart';
 import 'package:localised/loading.dart';
 import 'package:localised/utils/painter.dart';
 import 'package:localised/utils/theme.dart' as Theme;
@@ -498,7 +499,7 @@ class _MerchantSignInState extends State<MerchantSignIn> {
 
   Widget _buildSignUp(BuildContext context) {
     var userLocation = Provider.of<UserLocation>(context);
-    return Container(
+    return loading ? Loading() : Container(
       padding: EdgeInsets.only(top: 23.0),
       child: Column(
         children: <Widget>[
@@ -517,164 +518,167 @@ class _MerchantSignInState extends State<MerchantSignIn> {
                   child: Container(
                     width: 300.0,
                     height: 360.0,
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                          child: TextFormField(
-                            focusNode: myFocusNodeName,
-                            controller: signupNameController,
-                            keyboardType: TextInputType.text,
-                            textCapitalization: TextCapitalization.words,
-                            style: TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                fontSize: 16.0,
-                                color: Colors.black),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              icon: Icon(
-                                FontAwesomeIcons.user,
-                                color: Colors.black,
-                              ),
-                              hintText: "Shop Name",
-                              hintStyle: TextStyle(
-                                  fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                            ),
-                            onChanged: (val)
-                            {
-                              setState(() {
-                                username = val;
-                              });
-                            },
-                            validator: (val) => val.isEmpty ? 'Username cannot be empty' : null,
-                          ),
-                        ),
-                        Container(
-                          width: 250.0,
-                          height: 1.0,
-                          color: Colors.grey[400],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                          child: TextFormField(
-                            focusNode: myFocusNodeEmail,
-                            controller: signupEmailController,
-                            keyboardType: TextInputType.emailAddress,
-                            style: TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                fontSize: 16.0,
-                                color: Colors.black),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              icon: Icon(
-                                FontAwesomeIcons.envelope,
-                                color: Colors.black,
-                              ),
-                              hintText: "Email Address",
-                              hintStyle: TextStyle(
-                                  fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                            ),
-                            onChanged: (val)
-                            {
-                              setState(() {
-                                email = val;
-                              });
-                            },
-                            validator: (val) => val.isEmpty ? 'Enter an Email' : null,
-                          ),
-                        ),
-                        Container(
-                          width: 250.0,
-                          height: 1.0,
-                          color: Colors.grey[400],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                          child: TextFormField(
-                            focusNode: myFocusNodePassword,
-                            controller: signupPasswordController,
-                            obscureText: _obscureTextSignup,
-                            style: TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                fontSize: 16.0,
-                                color: Colors.black),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              icon: Icon(
-                                FontAwesomeIcons.lock,
-                                color: Colors.black,
-                              ),
-                              hintText: "Password",
-                              hintStyle: TextStyle(
-                                  fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                              suffixIcon: GestureDetector(
-                                onTap: _toggleSignup,
-                                child: Icon(
-                                  _obscureTextSignup
-                                      ? FontAwesomeIcons.eye
-                                      : FontAwesomeIcons.eyeSlash,
-                                  size: 15.0,
+                    child: SingleChildScrollView
+                    (
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            child: TextFormField(
+                              focusNode: myFocusNodeName,
+                              controller: signupNameController,
+                              keyboardType: TextInputType.text,
+                              textCapitalization: TextCapitalization.words,
+                              style: TextStyle(
+                                  fontFamily: "WorkSansSemiBold",
+                                  fontSize: 16.0,
+                                  color: Colors.black),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                icon: Icon(
+                                  FontAwesomeIcons.user,
                                   color: Colors.black,
                                 ),
+                                hintText: "Shop Name",
+                                hintStyle: TextStyle(
+                                    fontFamily: "WorkSansSemiBold", fontSize: 16.0),
                               ),
+                              onChanged: (val)
+                              {
+                                setState(() {
+                                  username = val;
+                                });
+                              },
+                              validator: (val) => val.length<4 ? 'Username should be of 4 characters at lease' : null,
                             ),
-                            onChanged: (val)
-                            {
-                              setState(() {
-                                password = val;
-                              });
-                            },
-                            validator: (val) => val.length<6 ? 'Password should be 6 characters at least' : null,
                           ),
-                        ),
-                        Container(
-                          width: 250.0,
-                          height: 1.0,
-                          color: Colors.grey[400],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                          child: TextFormField(
-                            controller: signupConfirmPasswordController,
-                            obscureText: _obscureTextSignupConfirm,
-                            style: TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                fontSize: 16.0,
-                                color: Colors.black),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              icon: Icon(
-                                FontAwesomeIcons.lock,
-                                color: Colors.black,
-                              ),
-                              hintText: "Confirmation",
-                              hintStyle: TextStyle(
-                                  fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                              suffixIcon: GestureDetector(
-                                onTap: _toggleSignupConfirm,
-                                child: Icon(
-                                  _obscureTextSignupConfirm
-                                      ? FontAwesomeIcons.eye
-                                      : FontAwesomeIcons.eyeSlash,
-                                  size: 15.0,
+                          Container(
+                            width: 250.0,
+                            height: 1.0,
+                            color: Colors.grey[400],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            child: TextFormField(
+                              focusNode: myFocusNodeEmail,
+                              controller: signupEmailController,
+                              keyboardType: TextInputType.emailAddress,
+                              style: TextStyle(
+                                  fontFamily: "WorkSansSemiBold",
+                                  fontSize: 16.0,
+                                  color: Colors.black),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                icon: Icon(
+                                  FontAwesomeIcons.envelope,
                                   color: Colors.black,
                                 ),
+                                hintText: "Email Address",
+                                hintStyle: TextStyle(
+                                    fontFamily: "WorkSansSemiBold", fontSize: 16.0),
                               ),
+                              onChanged: (val)
+                              {
+                                setState(() {
+                                  email = val;
+                                });
+                              },
+                              validator: (val) => val.isEmpty ? 'Enter an Email' : null,
                             ),
-                            onChanged: (val)
-                            {
-                              setState(() {
-                                confirm = val;
-                              });
-                            },
-                            validator: (val) => val != password ? 'Passwords don\'t match' : null,
                           ),
-                        ),
-                      ],
+                          Container(
+                            width: 250.0,
+                            height: 1.0,
+                            color: Colors.grey[400],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            child: TextFormField(
+                              focusNode: myFocusNodePassword,
+                              controller: signupPasswordController,
+                              obscureText: _obscureTextSignup,
+                              style: TextStyle(
+                                  fontFamily: "WorkSansSemiBold",
+                                  fontSize: 16.0,
+                                  color: Colors.black),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                icon: Icon(
+                                  FontAwesomeIcons.lock,
+                                  color: Colors.black,
+                                ),
+                                hintText: "Password",
+                                hintStyle: TextStyle(
+                                    fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                                suffixIcon: GestureDetector(
+                                  onTap: _toggleSignup,
+                                  child: Icon(
+                                    _obscureTextSignup
+                                        ? FontAwesomeIcons.eye
+                                        : FontAwesomeIcons.eyeSlash,
+                                    size: 15.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              onChanged: (val)
+                              {
+                                setState(() {
+                                  password = val;
+                                });
+                              },
+                              validator: (val) => val.length<8 ? 'Password should be 8 characters at least' : null,
+                            ),
+                          ),
+                          Container(
+                            width: 250.0,
+                            height: 1.0,
+                            color: Colors.grey[400],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                            child: TextFormField(
+                              controller: signupConfirmPasswordController,
+                              obscureText: _obscureTextSignupConfirm,
+                              style: TextStyle(
+                                  fontFamily: "WorkSansSemiBold",
+                                  fontSize: 16.0,
+                                  color: Colors.black),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                icon: Icon(
+                                  FontAwesomeIcons.lock,
+                                  color: Colors.black,
+                                ),
+                                hintText: "Confirmation",
+                                hintStyle: TextStyle(
+                                    fontFamily: "WorkSansSemiBold", fontSize: 16.0),
+                                suffixIcon: GestureDetector(
+                                  onTap: _toggleSignupConfirm,
+                                  child: Icon(
+                                    _obscureTextSignupConfirm
+                                        ? FontAwesomeIcons.eye
+                                        : FontAwesomeIcons.eyeSlash,
+                                    size: 15.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              onChanged: (val)
+                              {
+                                setState(() {
+                                  confirm = val;
+                                });
+                              },
+                              validator: (val) => val != password ? 'Passwords don\'t match' : null,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -722,7 +726,12 @@ class _MerchantSignInState extends State<MerchantSignIn> {
                     ),
                     onPressed: () async
                     {
-                      if(_formKey2.currentState.validate())
+                      DatabaseMethods databaseMethods = new DatabaseMethods();
+                      final valid = await databaseMethods.usernameCheck(username);
+                      if (!valid) {
+                        showInSnackBar('Username Already Taken');
+                      }
+                      else if(_formKey2.currentState.validate())
                       {
                         setState(()
                         {

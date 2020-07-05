@@ -22,7 +22,7 @@ class _MerchHomeState extends State<MerchHome> {
 
   Auth _auth = Auth();
 
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   Stream<QuerySnapshot> cardDetails;
   DatabaseMethods databaseMethods = new DatabaseMethods();
