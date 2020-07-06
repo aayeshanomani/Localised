@@ -1,12 +1,24 @@
 //import 'dart:html';
 
+import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:localised/auth.dart';
+import 'package:localised/database.dart';
+import 'package:localised/helper.dart';
+import 'package:localised/merchant_home.dart';
+import 'package:localised/user.dart';
+import 'package:provider/provider.dart';
+
+import 'loading.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -15,20 +27,286 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   Auth _auth = Auth();
   File sampleImage;
+  String username = "";
+  String url = 'https://wallpapercave.com/wp/wp5174771.jpg';
+  String newurl;
+  bool editScreen = false;
+  bool loading = false;
+  int k = 1;
+  final CollectionReference location = Firestore.instance.collection('locations');
 
   Future getImage() async
   {
-    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 20);
     setState(() {
       sampleImage = tempImage;
+    });
+    uploadImageTest();
+    setState(() {
+      editScreen = false;
+      editScreen = true;
+    });
+    uploadImageTest();
+  }
+
+  uploadImageTest() async
+  {
+    loading = true;
+    print('taking');
+    final user = Provider.of<User>(context);
+    print('user');
+    final StorageReference storageReference = FirebaseStorage.instance.ref().child('test/${user.uid.toString()}.jpg');
+    print('uploaded');
+    StorageUploadTask task = storageReference.putFile(sampleImage);
+    while(task==null)
+    {
+      task = storageReference.putFile(sampleImage);
+    }
+    print('task done');
+    var pic;
+    pic = await storageReference.getDownloadURL() as String;
+    pic = await storageReference.getDownloadURL() as String;
+    print('url loaded');
+    setState(() {
+      url = pic;
+      newurl = url;
+    });
+    print(newurl);
+    loading = false;
+  }
+
+  uploadImage() async
+  {
+    //loading = true;
+    final user = Provider.of<User>(context);
+    final StorageReference storageReference = FirebaseStorage.instance.ref().child('photos/${user.uid}.jpg');
+    StorageUploadTask task = storageReference.putFile(sampleImage);
+    print('upload again');
+    url = await storageReference.getDownloadURL() as String;
+    print(url);
+    updateDP(url);
+    /*task.future.then((value)
+    {
+      updateDP(value.downloadUrl.toString());
+      url = value.downloadUrl.toString();
+    }).catchError((e){
+      print(e.toString());
+    });*/
+  }
+
+  Future updateDP(picurl) async
+  {
+    final user = Provider.of<User>(context);
+    location.document(user.uid).updateData
+    ({
+      'photoUrl': picurl
+    });
+  }
+
+  readyProfile() async
+  {
+    setState(() async{
+      //username = await HelperFunc.getUsername();
+      loading = false;
     });
   }
 
   @override
+  void initState() {
+    readyProfile();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final user = Provider.of<User>(context);
+    return editScreen ?
+    Scaffold
+    (
+      key: _scaffoldKey,
+      appBar: AppBar
+      (
+        title: Text('Edit Profile',
+        style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.redAccent,
+        elevation: 28.0,
+        actions: <Widget>
+        [
+          FlatButton.icon
+          (
+            icon: Icon
+            (
+              FontAwesomeIcons.minus,
+              color: Colors.white,
+              size: 10.0,
+            ),
+            label: Text
+            (
+              'Cancel',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: ()
+            {
+              setState(() {
+                editScreen = false;
+                loading = false;
+              });
+            },
+          )
+        ],
+      ),
+      body: Stack
+      (
+        children: <Widget>
+        [
+          ClipPath
+          (
+            child: Container
+            (
+              color: Colors.red[800].withOpacity(0.8),
+            ),
+            clipper: getClipper(),
+          ),
+          Positioned
+          (
+            width: 350,
+            top: MediaQuery.of(context).size.height/5.2,
+            left: MediaQuery.of(context).size.width/16,
+            child: StreamBuilder
+            (
+              stream: Firestore.instance.collection('locations').where('id', isEqualTo: user.uid).snapshots(),
+              builder: (context, snapshot)
+              {
+                return SingleChildScrollView
+                (
+                  child: Column
+                  (
+                    children: <Widget>
+                    [
+                      loading? SpinKitCubeGrid(color: Colors.deepOrange[100],) :Container
+                      (
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration
+                        (
+                          color: Colors.red[900],
+                          image: DecorationImage
+                          (
+                            image: NetworkImage((snapshot.data.documents[0]['photoUrl']!=null
+                                && snapshot.data.documents[0]['photoUrl']!="")? 
+                                snapshot.data.documents[0]['photoUrl'] : url),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(83)),
+                          boxShadow: 
+                          [
+                            BoxShadow(blurRadius: 16, color: Colors.black)
+                          ]
+                        ),
+                      ),
+                      SizedBox(height: 22.0),
+                      GestureDetector
+                      (
+                        onTap: ()
+                        {
+                          print('dp');
+                          getImage();
+                        },
+                        child: Text 
+                        (
+                          loading? '' : 'Change Profile Photo',
+                          style: TextStyle
+                          (
+                            fontSize: 15,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: 'Lato',
+                            color: Colors.black
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 58),
+                      TextField 
+                      (
+                        onChanged: (value) 
+                        {
+                          setState(() {
+                            username = value;
+                          });
+                          print(username);
+                        },
+                        decoration: InputDecoration
+                        (
+                          hintText: snapshot.data.documents[0]['name'],
+                          labelText: 'Username',
+                          labelStyle: TextStyle
+                          (
+                            color: Colors.redAccent[700],
+                            fontSize: 10.0
+                          )
+                        ),
+                        //
+                        style: TextStyle
+                        (
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
+                          color: Colors.black
+                        ),
+                      ),
+                      SizedBox(height: 22.0),
+                      SizedBox(height: 28),
+                    ],
+                  ),
+                );
+              }
+            )
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton
+      (
+        onPressed: () async
+        {
+          DatabaseMethods databaseMethods = new DatabaseMethods();
+          final valid = await databaseMethods.usernameCheck(username);
+          if(username != null && username != "")
+          {
+            if(username.length<4)
+              showInSnackBar('Username too short');
+            else if (!valid) 
+              showInSnackBar('Username Already Taken');
+            else
+            {
+              location.document(user.uid).updateData
+              ({
+                'name': username,
+                'searchKey': username[0]
+              });
+              setState(() {
+                editScreen = false;
+                username = "";
+              });
+            }
+          }
+          if(sampleImage!=null)
+          {
+            uploadImage();
+          }
+         print(username);
+        },
+        tooltip: "Get Image",
+        child: Icon
+        (
+          FontAwesomeIcons.save
+        ),
+        backgroundColor: Colors.red[700],
+      ),
+    ) :
+    Scaffold(
       /*appBar: AppBar
       (
         title: Text('Profile',
@@ -106,111 +384,134 @@ class _ProfileState extends State<Profile> {
           Positioned
           (
             width: 350,
-            top: MediaQuery.of(context).size.height/4.7,
+            top: MediaQuery.of(context).size.height/4.4,
             left: MediaQuery.of(context).size.width/16,
-            child: Column
+            child: StreamBuilder
             (
-              children: <Widget>
-              [
-                Container
+              stream: Firestore.instance.collection('locations').where('id', isEqualTo: user.uid).snapshots(),
+              builder: (context, snapshot)
+              {
+                return Column
                 (
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration
-                  (
-                    color: Colors.red[900],
-                    image: DecorationImage
+                  children: <Widget>
+                  [
+                    Container
                     (
-                      image: sampleImage == null ? NetworkImage('https://wallpapercave.com/wp/wp5174771.jpg')
-                      : Image.file(sampleImage),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(83)),
-                    boxShadow: 
-                    [
-                      BoxShadow(blurRadius: 16, color: Colors.black)
-                    ]
-                  ),
-                ),
-                SizedBox(height: 90),
-                Text
-                (
-                  'Shop',
-                  style: TextStyle
-                  (
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Lato'
-                  ),
-                ),
-                SizedBox(height: 28),
-                Container
-                (
-                  height: 30,
-                  width: 95,
-                  child: Material
-                  (
-                    borderRadius: BorderRadius.circular(28),
-                    shadowColor: Colors.redAccent[100],
-                    color: Colors.redAccent,
-                    elevation: 7.0,
-                    child: GestureDetector
-                    (
-                      onTap: ()
-                      {
-
-                      },
-                      child: Center
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration
                       (
-                        child: Text
+                        color: Colors.red[900],
+                        image: DecorationImage
                         (
-                          'Edit Profile',
-                          style: TextStyle
+                          image: NetworkImage((snapshot.data.documents[0]['photoUrl']!=null
+                                && snapshot.data.documents[0]['photoUrl']!="")? 
+                                snapshot.data.documents[0]['photoUrl'] : url),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(83)),
+                        boxShadow: 
+                        [
+                          BoxShadow(blurRadius: 16, color: Colors.black)
+                        ]
+                      ),
+                    ),
+                    SizedBox(height: 90),
+                    Text 
+                    (
+                      snapshot.data.documents[0]['name'],
+                      style: TextStyle
+                      (
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Lato',
+                        color: Colors.black
+                      ),
+                    ),
+                    SizedBox(height: 22.0),
+                    Text 
+                    (
+                      snapshot.data.documents[0]['email'],
+                      style: TextStyle
+                      (
+                        fontSize: 15,
+                        fontStyle: FontStyle.italic,
+                        fontFamily: 'Lato',
+                        color: Colors.black
+                      ),
+                    ),
+                    SizedBox(height: 28),
+                    Container
+                    (
+                      height: 30,
+                      width: 95,
+                      child: Material
+                      (
+                        borderRadius: BorderRadius.circular(28),
+                        shadowColor: Colors.redAccent[100],
+                        color: Colors.redAccent,
+                        elevation: 7.0,
+                        child: GestureDetector
+                        (
+                          onTap: ()
+                          {
+                            setState(() {
+                              editScreen = true;
+                            });
+                          },
+                          child: Center
                           (
-                            color: Colors.white
+                            child: Text
+                            (
+                              'Edit Profile',
+                              style: TextStyle
+                              (
+                                color: Colors.white
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 28),
-                Container
-                (
-                  height: 30,
-                  width: 95,
-                  child: Material
-                  (
-                    borderRadius: BorderRadius.circular(28),
-                    shadowColor: Colors.redAccent[400],
-                    color: Colors.redAccent[700],
-                    elevation: 7.0,
-                    child: GestureDetector
+                    SizedBox(height: 28),
+                    Container
                     (
-                      onTap: () async
-                      {
-                        await _auth.signOut();
-                      },
-                      child: Center
+                      height: 30,
+                      width: 95,
+                      child: Material
                       (
-                        child: Text
+                        borderRadius: BorderRadius.circular(28),
+                        shadowColor: Colors.redAccent[400],
+                        color: Colors.redAccent[700],
+                        elevation: 7.0,
+                        child: GestureDetector
                         (
-                          'Logout',
-                          style: TextStyle
+                          onTap: () async
+                          {
+                            await _auth.signOut();
+                          },
+                          child: Center
                           (
-                            color: Colors.white
+                            child: Text
+                            (
+                              'Logout',
+                              style: TextStyle
+                              (
+                                color: Colors.white
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-              ],
+                    )
+                  ],
+                );
+              }
             )
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton
+      /*floatingActionButton: FloatingActionButton
       (
         onPressed: ()
         {
@@ -222,7 +523,7 @@ class _ProfileState extends State<Profile> {
           FontAwesomeIcons.palette,
         ),
         backgroundColor: Colors.red[700],
-      ),
+      ),*/
     );
   }
   
@@ -257,6 +558,23 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
+  }
+
+  void showInSnackBar(String value) {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    _scaffoldKey.currentState?.removeCurrentSnackBar();
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+      content: new Text(
+        value,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+            fontFamily: "Lato"),
+      ),
+      backgroundColor: Colors.deepOrange[50],
+      duration: Duration(seconds: 3),
+    ));
   }
 }
 

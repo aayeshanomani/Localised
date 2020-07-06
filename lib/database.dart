@@ -31,7 +31,8 @@ class Database
       'type': type,
       'latitude': latitude,
       'longitude': longitude,
-      'email': email
+      'email': email,
+      'photoUrl': 'https://wallpapercave.com/wp/wp5174771.jpg'
     });
   }
 }

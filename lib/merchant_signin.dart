@@ -172,11 +172,11 @@ class _MerchantSignInState extends State<MerchantSignIn> {
         value,
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 16.0,
-            fontFamily: "WorkSansSemiBold"),
+            fontFamily: "Lato"),
       ),
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.deepOrange[50],
       duration: Duration(seconds: 3),
     ));
   }
