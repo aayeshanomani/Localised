@@ -42,10 +42,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Scaffold(
-        body: SingleChildScrollView(
-            child: AnnotatedRegion<SystemUiOverlayStyle>(
+    return Scaffold(
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
             child: Container(
               decoration: BoxDecoration(
@@ -68,11 +66,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Container(
                       alignment: Alignment.centerRight,
                       child: FlatButton(
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Choice() ),),
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Wrapper() ),),
                         child: Text(
                           'Skip',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color(0xFFEF9A9A),
                             fontSize: 20.0,
                           ),
                         ),
@@ -105,13 +103,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                                 SizedBox(height: 30.0),
                                 Text(
-                                  'Connect people\naround the world',
-                                  style: kTitleStyle,
+                                  'Order from shops around you',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'CM Sans Serif',
+                                    fontSize: 26.0,
+                                    height: 1.5,
+                                  ),
                                 ),
                                 SizedBox(height: 15.0),
                                 Text(
-                                  'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                                  style: kSubtitleStyle,
+                                  'Get delivered from shops nearby. Search for shops of your requirement and connect with them.',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'CM Sans Serif',
+                                    fontSize: 18.0,
+                                    height: 1.5,
+                                  ),
                                 ),
                               ],
                             ),
@@ -132,13 +140,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                                 SizedBox(height: 30.0),
                                 Text(
-                                  'Live your life smarter\nwith us!',
-                                  style: kTitleStyle,
+                                  'Fast and Secure Delivery',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'CM Sans Serif',
+                                    fontSize: 26.0,
+                                    height: 1.5,
+                                  ),
                                 ),
                                 SizedBox(height: 15.0),
                                 Text(
-                                  'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                                  style: kSubtitleStyle,
+                                  'Get hassle free delivery at your doorstep readily of your products ordered.',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'CM Sans Serif',
+                                    fontSize: 18.0,
+                                    height: 1.5,
+                                  ),
                                 ),
                               ],
                             ),
@@ -159,13 +177,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                                 SizedBox(height: 30.0),
                                 Text(
-                                  'Get a new experience\nof imagination',
-                                  style: kTitleStyle,
+                                  'Shop in your Comfort Zone',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'CM Sans Serif',
+                                    fontSize: 26.0,
+                                    height: 1.5,
+                                  ),
                                 ),
                                 SizedBox(height: 15.0),
                                 Text(
-                                  'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-                                  style: kSubtitleStyle,
+                                  'Shop for the best available products near you without the need to step out of your comfort zone.',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'CM Sans Serif',
+                                    fontSize: 18.0,
+                                    height: 1.5,
+                                  ),
                                 ),
                               ],
                             ),
@@ -216,21 +244,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-        ),
         bottomSheet: _currentPage == _numPages - 1
             ? Container(
-          height: 100.0,
+          height: 80.0,
           width: double.infinity,
           color: Colors.white,
           child: GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Choice() ),),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Wrapper() ),),
             child: Center(
               child: Padding(
                 padding: EdgeInsets.only(bottom: 30.0),
                 child: Text(
                   'Get started',
                   style: TextStyle(
-                    color: Color(0xFFEF9A9A),
+                    color: Colors.deepOrange[800],
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -240,7 +267,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         )
             : Text(''),
-      ),
     );
   }
 

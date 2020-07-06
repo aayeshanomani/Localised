@@ -33,6 +33,7 @@ class _MapViewState extends State<MapView> {
 
   Widget loadMap()
   {
+
     var userLocation = Provider.of<UserLocation>(context);
     return StreamBuilder
     (
@@ -43,6 +44,120 @@ class _MapViewState extends State<MapView> {
 
         for(int i = 0; i<snapshot.data.documents.length; i++)
         {
+          Dialog errorDialog = Dialog
+          (
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)), //this right here
+            child: Container
+            (
+              //
+              decoration: BoxDecoration
+              (
+                gradient: new LinearGradient
+                (
+                    colors: [
+                      Color(0xFFFFFFFF),
+                      Color(0xFFFFFFFF),
+                      Colors.redAccent[100]
+                    ],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(1.0, 1.0),
+                    stops: [0.0, 0.5 ,1.0],
+                    tileMode: TileMode.clamp),
+                    borderRadius: BorderRadius.circular(38.0)
+              ),
+              height: 300.0,
+              width: 300.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding:  EdgeInsets.all(15.0),
+                    child: Container
+                      (
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration
+                        (
+                          color: Colors.red[900],
+                          image: DecorationImage
+                          (
+                            image: NetworkImage(snapshot.data.documents[i]['photoUrl']),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(83)),
+                          boxShadow: 
+                          [
+                            BoxShadow(blurRadius: 16, color: Colors.black)
+                          ]
+                        ),
+                      ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text
+                    (
+                      'Order from '+snapshot.data.documents[i]['name'], 
+                      style: TextStyle
+                      (
+                        color: Colors.red,
+                        fontSize: 20.0
+                      ),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 50.0)),
+                  Row
+                  (
+                    children: <Widget>
+                    [
+                      Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: MaterialButton
+                        (
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.deepOrangeAccent,
+                          color: Colors.redAccent[100],
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                          onPressed: () 
+                          {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                fontFamily: "Lato"),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: MaterialButton
+                        (
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.deepOrangeAccent,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                          onPressed: () 
+                          {
+                            startChat(context, snapshot.data.documents[i]['name']);
+                          },
+                          child: Text(
+                            "Message",
+                            style: TextStyle(
+                                color: Colors.redAccent[100],
+                                fontSize: 18.0,
+                                fontFamily: "Lato"),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
           if(snapshot.data.documents[i]['type'] == 'merchant')
           {
             allMarkers.add
@@ -91,7 +206,8 @@ class _MapViewState extends State<MapView> {
                             },
                           ),
                         );
-                        Scaffold.of(context).showSnackBar(snackBar);
+                        //Scaffold.of(context).showSnackBar(snackBar);
+                        showDialog(context: context, builder: (BuildContext context) => errorDialog);
                       },
                     ),
                     /*onDoubleTap: ()
@@ -139,8 +255,6 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
-
-
     setMarkers()
     {
       return allMarkers;

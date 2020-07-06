@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:localised/chatroom.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/customer_home.dart';
@@ -65,6 +66,9 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.red[900]),
+    );
 
     return Scaffold(
       appBar: AppBar
