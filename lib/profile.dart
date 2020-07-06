@@ -46,6 +46,7 @@ class _ProfileState extends State<Profile> {
       sampleImage = tempImage;
     });
     uploadImageTest();
+    showInSnackBar('If Current Image is not loaded press save button again to reload');
     setState(() {
       editScreen = false;
       editScreen = true;
@@ -68,8 +69,15 @@ class _ProfileState extends State<Profile> {
     }
     print('task done');
     var pic;
-    pic = await storageReference.getDownloadURL() as String;
-    pic = await storageReference.getDownloadURL() as String;
+    try{
+      pic = await storageReference.getDownloadURL() as String;
+      pic = await storageReference.getDownloadURL() as String;
+    }
+    catch(e)
+    {
+      print(e.toString());
+    }
+    
     print('url loaded');
     setState(() {
       url = pic;
@@ -86,7 +94,13 @@ class _ProfileState extends State<Profile> {
     final StorageReference storageReference = FirebaseStorage.instance.ref().child('photos/${user.uid}.jpg');
     StorageUploadTask task = storageReference.putFile(sampleImage);
     print('upload again');
-    url = await storageReference.getDownloadURL() as String;
+    try{
+      url = await storageReference.getDownloadURL() as String;
+    }catch(e)
+    {
+      print('PIC URL DOWNLOAD ERROR'+e.toString());
+    }
+    
     print(url);
     updateDP(url);
     /*task.future.then((value)
@@ -140,14 +154,18 @@ class _ProfileState extends State<Profile> {
           (
             icon: Icon
             (
-              FontAwesomeIcons.minus,
+              FontAwesomeIcons.arrowCircleRight,
               color: Colors.white,
-              size: 10.0,
+              size: 25.0,
             ),
             label: Text
             (
-              'Cancel',
-              style: TextStyle(color: Colors.white),
+              'wxit',
+              style: TextStyle
+              (
+                color: Colors.white,
+                fontSize: 0.0
+              ),
             ),
             onPressed: ()
             {
@@ -174,7 +192,7 @@ class _ProfileState extends State<Profile> {
           Positioned
           (
             width: 350,
-            top: MediaQuery.of(context).size.height/5.2,
+            top: MediaQuery.of(context).size.height/5.8,
             left: MediaQuery.of(context).size.width/16,
             child: StreamBuilder
             (
@@ -187,6 +205,7 @@ class _ProfileState extends State<Profile> {
                   (
                     children: <Widget>
                     [
+                      SizedBox(height: 22.0),
                       loading? SpinKitCubeGrid(color: Colors.deepOrange[100],) :Container
                       (
                         width: 150,
@@ -196,9 +215,7 @@ class _ProfileState extends State<Profile> {
                           color: Colors.red[900],
                           image: DecorationImage
                           (
-                            image: NetworkImage((snapshot.data.documents[0]['photoUrl']!=null
-                                && snapshot.data.documents[0]['photoUrl']!="")? 
-                                snapshot.data.documents[0]['photoUrl'] : url),
+                            image: NetworkImage(snapshot.data.documents[0]['photoUrl']),
                             fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(83)),
@@ -295,6 +312,7 @@ class _ProfileState extends State<Profile> {
           if(sampleImage!=null)
           {
             uploadImage();
+            showInSnackBar('If Current Image is not loaded press save button again to reload');
           }
          print(username);
         },

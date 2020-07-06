@@ -57,6 +57,7 @@ class _Cust_SignInState extends State<Cust_SignIn> {
   String password = "";
   String username = "";
   String confirm = "";
+  String error = "";
 
   final Auth _auth = Auth();
   final _formKey1 = GlobalKey<FormState>();
@@ -114,11 +115,13 @@ class _Cust_SignInState extends State<Cust_SignIn> {
                         setState(() {
                           right = Colors.black54;
                           left = Colors.black;
+                          error = "";
                         });
                       } else if (i == 1) {
                         setState(() {
                           right = Colors.black;
                           left = Colors.black54;
+                          error = "";
                         });
                       }
                     },
@@ -384,6 +387,7 @@ class _Cust_SignInState extends State<Cust_SignIn> {
                         if (result == null) {
                           setState(() {
                             loading = false;
+                            error = "Please enter a registered email!";
                           });
                         }
                       }
@@ -391,6 +395,18 @@ class _Cust_SignInState extends State<Cust_SignIn> {
                 )
               ),
             ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10.0),
+            child: FlatButton(
+                onPressed: () {},
+                child: Text(
+                  error,
+                  style: TextStyle(
+                      color: Colors.deepOrange[600],
+                      fontSize: 18.0,
+                      fontFamily: "Lato"),
+                )),
           ),
           Padding(
             padding: EdgeInsets.only(top: 10.0),
@@ -733,6 +749,7 @@ class _Cust_SignInState extends State<Cust_SignIn> {
                         {
                           setState(() {
                             loading = false;
+                            error = 'Please enter a valid email!';
                           });
                         }
                       }

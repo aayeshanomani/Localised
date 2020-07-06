@@ -30,16 +30,19 @@ class _SearchViewState extends State<SearchView> {
         tempSearchStore = [];
       });
     }
-    var capitalizedValue = value.toUpperCase();
+    var capitalizedValue = value[0].toUpperCase()+value.substring(1,value.length);
+    print(capitalizedValue);
 
     if(queryResultSet.length == 0 && value.length == 1)
     {
-      SearchService().searchByName(value).then((QuerySnapshot docs)
+      print(queryResultSet);
+      SearchService().searchByName(capitalizedValue).then((QuerySnapshot docs)
       {
         for(int i = 0; i<docs.documents.length; i++)
         {
           queryResultSet.add(docs.documents[i].data);
           showLoad = 1;
+          print(queryResultSet);
         }
         showLoad = 0;
       });
@@ -49,7 +52,8 @@ class _SearchViewState extends State<SearchView> {
       tempSearchStore = [];
       queryResultSet.forEach((element) 
       {
-        if(element['name'].startsWith(value))
+        //print(tempSearchStore);
+        if(element['name'].startsWith(capitalizedValue))
         {
           setState(() {
             tempSearchStore.add(element);
@@ -188,7 +192,11 @@ Widget resultCard(BuildContext context, e)
                   decoration: BoxDecoration
                   (
                     color: Colors.red[400],
-                    borderRadius: BorderRadius.circular(29.0)
+                    borderRadius: BorderRadius.circular(29.0),
+                    boxShadow: 
+                    [
+                      BoxShadow(blurRadius: 2, color: Colors.black)
+                    ]
                   ),
                   padding: EdgeInsets.all(10.0),
                   child: Text
