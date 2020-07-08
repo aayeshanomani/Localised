@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:localised/choice.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/database.dart';
@@ -59,6 +60,18 @@ class Auth
           .then((val){
         snapshot = val;
         HelperFunc.saveUsername(snapshot.documents[0].data['name']);
+        FirebaseMessaging _messaging = FirebaseMessaging();
+        _messaging.getToken().then((value)
+        {
+          print('TOKEN   '+value);
+          Map<String, dynamic> token = 
+          {
+            "token": value,
+            "username": snapshot.documents[0].data['name']
+          };
+          DatabaseMethods databaseMethods = DatabaseMethods();
+          databaseMethods.addToken(token);
+        });
       });
       return _userFromFirebase(user);
     }

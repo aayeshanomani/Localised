@@ -50,6 +50,17 @@ class DatabaseMethods
     });
   }
 
+  updateChatRoom(String chatRoomId, chatRoomMap)
+  {
+    Firestore.instance.collection('ChatRoom')
+      .document(chatRoomId)
+      .updateData(chatRoomMap)
+      .catchError((e)
+      {
+        print(e.toString());
+      });
+  }
+
   getUserByEmail(String email) async
   {
     return await Firestore.instance.collection('locations')
@@ -75,6 +86,17 @@ class DatabaseMethods
     {
       print(e.toString());
     });
+  }
+
+  addToken(token)
+  {
+    print(token);
+    Firestore.instance.collection('tokens')
+      .add(token)
+      .catchError((e)
+      {
+        print(e.toString());
+      });
   }
 
   getChatRooms(String username) async

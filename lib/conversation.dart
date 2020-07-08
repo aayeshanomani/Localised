@@ -50,10 +50,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
       Map<String, dynamic> messageMap = {
         "message": message,
         "sendBy": await HelperFunc.getUsername(),
+        "sendTo": widget.chatRoomId.replaceAll("_", "")
+              .replaceAll(Constants.myName, ""),
         "time": DateTime.now().millisecondsSinceEpoch,
       };
       databaseMethods.addMessages(widget.chatRoomId, messageMap);
+      List<String> users = [username, await HelperFunc.getUsername()];
+      Map<String, dynamic> chatRoomMap =
+      {
+        "users": users,
+        "chatRoomId": widget.chatRoomId
+      };
       textEditingController.text = "";
+      databaseMethods.updateChatRoom(widget.chatRoomId, chatRoomMap);
     }
   }
 

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:localised/constants.dart';
 import 'package:localised/conversation.dart';
@@ -52,7 +54,8 @@ class _ChatRoomState extends State<ChatRoom> {
                   .toString()
                   .replaceAll("_", "")
                   .replaceAll(Constants.myName, ""),
-              chatRoomId: snapshot.data.documents[index].data['chatRoomId'], lastMessage: widget.type,);
+              chatRoomId: snapshot.data.documents[index].data['chatRoomId'], 
+              lastMessage: widget.type,);
               //: Constants.lastMessage.toString());
             }
         ) : 
@@ -70,6 +73,8 @@ class _ChatRoomState extends State<ChatRoom> {
     );
   }
 
+  final FirebaseMessaging _messaging = FirebaseMessaging();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -81,6 +86,7 @@ class _ChatRoomState extends State<ChatRoom> {
       });
     });
     super.initState();
+
   }
 
   getUserInfo() async
@@ -137,59 +143,70 @@ class ChatTile extends StatelessWidget {
         //color: Colors.white,
         padding: EdgeInsets.all(20),
         child: Row
-          (
-          children: <Widget>
-          [
-            Container
+        (
+            children: <Widget>
+            [
+              StreamBuilder
               (
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration
-                (
-                color: Colors.redAccent,
-                borderRadius: BorderRadius.circular(78)
+                stream: Firestore.instance.collection('locations').snapshots(),
+                builder: (context, snapshot) 
+                {
+                  for (int i = 0; i < snapshot.data.documents.length; i++)
+                  {
+                    if(snapshot.data.documents[i]['name']==username)
+                    {
+                      return Container
+                      (
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration
+                        (
+                          color: Colors.red[900],
+                          image: DecorationImage
+                          (
+                            image: NetworkImage(snapshot.data.documents[i]['photoUrl']),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(83)),
+                          boxShadow: 
+                          [
+                            BoxShadow(blurRadius: 2, color: Colors.black)
+                          ]
+                        ),
+                      );
+                    }
+                  } 
+                }
               ),
-              child: Center(
-                child: Text
-                  (
-                    username.substring(0,1).toUpperCase(),
-                    style: TextStyle
+              SizedBox(width: 8.0,),
+              Column(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text
                     (
-                      color: Colors.white,
-                      fontSize: 18
-                    ),
-                ),
-              ),
-            ),
-            SizedBox(width: 8.0,),
-            Column(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Text
-                  (
-                    username, 
-                    style: TextStyle
-                    (
-                      color: Colors.redAccent[100],
-                      fontSize: 20,
+                      username, 
+                      style: TextStyle
+                      (
+                        color: Colors.redAccent[100],
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 5),
-                Text
-                (
-                  (lastMessage == 'customer' ? 'Place order to ' : 'Order received from ')+username ,
-                  style: TextStyle
+                  SizedBox(height: 5),
+                  Text
                   (
-                    color: Colors.redAccent[700],
-                    fontSize: 11,
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
+                    (lastMessage == 'customer' ? 'Place order to ' : 'Order received from ')+username ,
+                    style: TextStyle
+                    (
+                      color: Colors.redAccent[700],
+                      fontSize: 11,
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
       ),
     );
   }

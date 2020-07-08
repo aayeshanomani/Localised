@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:localised/choice.dart';
 import 'package:localised/customer_home.dart';
@@ -20,6 +21,8 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
 
   bool userLog;
+
+  FirebaseMessaging _messaging = FirebaseMessaging();
 
   @override
   void initState() {
