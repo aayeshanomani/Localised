@@ -2,11 +2,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:localised/choice.dart';
-import 'package:localised/constants.dart';
-import 'package:localised/database.dart';
-import 'package:localised/model_userlocation.dart';
-import 'package:localised/user.dart';
+import 'database.dart';
+import 'model_userlocation.dart';
+import 'user.dart';
 
 import 'helper.dart';
 //import 'package:google_sign_in/google_sign_in.dart';

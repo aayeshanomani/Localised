@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:localised/auth.dart';
-import 'package:localised/constants.dart';
-import 'package:localised/customer_home.dart';
-import 'package:localised/loading.dart';
-import 'package:localised/utils/painter.dart';
-import 'package:localised/utils/theme.dart' as Theme;
-import 'package:localised/wrapper.dart';
+import 'auth.dart';
+import 'constants.dart';
+import 'customer_home.dart';
+import 'loading.dart';
+import 'utils/painter.dart';
+import 'utils/theme.dart' as Theme;
+import 'wrapper.dart';
 import 'package:provider/provider.dart';
 
 import 'model_userlocation.dart';

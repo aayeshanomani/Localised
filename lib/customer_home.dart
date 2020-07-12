@@ -2,15 +2,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:localised/chatroom.dart';
-import 'package:localised/constants.dart';
-import 'package:localised/database.dart';
-import 'package:localised/helper.dart';
+import 'chatroom.dart';
+import 'constants.dart';
+import 'database.dart';
+import 'helper.dart';
 
-import 'package:localised/loading.dart';
-import 'package:localised/model_userlocation.dart';
-import 'package:localised/profile.dart';
-import 'package:localised/searchview.dart';
+import 'loading.dart';
+import 'model_userlocation.dart';
+import 'profile.dart';
+import 'searchview.dart';
 import 'package:provider/provider.dart';
 
 import 'auth.dart';
@@ -50,7 +50,7 @@ class CustomerHomeState extends State<CustomerHome> {
   Widget build(BuildContext context) {
     
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.redAccent),
+      SystemUiOverlayStyle(statusBarColor: Colors.redAccent[700]),
     );
     
     var userLocation = Provider.of<UserLocation>(context);

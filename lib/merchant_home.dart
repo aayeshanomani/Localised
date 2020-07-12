@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:localised/chatroom.dart';
-import 'package:localised/constants.dart';
-import 'package:localised/database.dart';
-import 'package:localised/loading.dart';
-import 'package:localised/payment.dart';
-import 'package:localised/profile.dart';
+import 'chatroom.dart';
+import 'constants.dart';
+import 'database.dart';
+import 'loading.dart';
+import 'payment.dart';
+import 'profile.dart';
 import 'package:provider/provider.dart';
 
 import 'auth.dart';
@@ -34,7 +34,6 @@ class _MerchHomeState extends State<MerchHome> {
   void initState() {
     // TODO: implement initState
     getUser();
-
     super.initState();
   }
 

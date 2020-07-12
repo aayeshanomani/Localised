@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class Database
@@ -122,11 +123,21 @@ class DatabaseMethods
     }
   }
 
-  getCardDetails(String username) async
+  addCard(token)
   {
-    print(username+" card function");
-    return Firestore.instance.collection('Cards')
-    .where("name", isEqualTo: username)
-        .getDocuments();
+    FirebaseAuth.instance.currentUser()
+    .then((value) => 
+    {
+      Firestore.instance.collection('cards')
+      .document(value.uid)
+      .collection('tokens')
+    });
+  }
+
+  deleteDatabase(String chatRoomId, String uid)
+  {
+    Firestore.instance.collection("ChatRoom")
+    .document(chatRoomId)
+    .delete();
   }
 }

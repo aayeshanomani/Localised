@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:localised/customer_home.dart';
-import 'package:localised/customer_signin.dart';
-import 'package:localised/merchant_signin.dart';
-import 'package:localised/user.dart';
-import 'package:localised/utils/colors.dart';
-import 'package:localised/utils/utils.dart';
+import 'customer_home.dart';
+import 'customer_signin.dart';
+import 'merchant_signin.dart';
+import 'user.dart';
+import 'utils/colors.dart';
+import 'utils/utils.dart';
 import 'package:provider/provider.dart';
 
 

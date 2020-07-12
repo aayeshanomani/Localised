@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:localised/choice.dart';
-import 'package:localised/customer_home.dart';
-import 'package:localised/merchant_home.dart';
-import 'package:localised/model_userlocation.dart';
-import 'package:localised/newloading.dart';
-import 'package:localised/onboarding.dart';
-import 'package:localised/service_location.dart';
-import 'package:localised/user.dart';
+import 'choice.dart';
+import 'customer_home.dart';
+import 'merchant_home.dart';
+import 'model_userlocation.dart';
+import 'newloading.dart';
+import 'onboarding.dart';
+import 'service_location.dart';
+import 'user.dart';
 import 'package:provider/provider.dart';
 
 import 'helper.dart';

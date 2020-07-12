@@ -1,4 +1,4 @@
-name: localised
+name: Localised
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -37,6 +37,7 @@ dependencies:
   stripe_payment:
   line_icons: ^0.2.0
   font_awesome_flutter: 
+  flutter_credit_card: 
 
 dev_dependencies:
   flutter_test:

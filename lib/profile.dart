@@ -1,6 +1,7 @@
 //import 'dart:html';
 
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
 
@@ -11,11 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:localised/auth.dart';
-import 'package:localised/database.dart';
-import 'package:localised/helper.dart';
-import 'package:localised/merchant_home.dart';
-import 'package:localised/user.dart';
+import 'auth.dart';
+import 'database.dart';
+import 'helper.dart';
+import 'merchant_home.dart';
+import 'user.dart';
 import 'package:provider/provider.dart';
 
 import 'loading.dart';
@@ -38,6 +39,7 @@ class _ProfileState extends State<Profile> {
   bool loading = false;
   int k = 1;
   final CollectionReference location = Firestore.instance.collection('locations');
+  final CollectionReference chatroom = Firestore.instance.collection('ChatRoom');
 
   Future getImage() async
   {
@@ -138,6 +140,47 @@ class _ProfileState extends State<Profile> {
     readyProfile();
     super.initState();
   }
+
+  Future<void> _showMyDialog() async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      final user = Provider.of<User>(context);
+      return AlertDialog(
+        title: Text('Alert'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Changing the username will delete all your chats'),
+              Text('Would you like to approve of this?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          Spacer(),
+          FlatButton(
+            child: Text('Approve'),
+            onPressed: () {
+              location.document(user.uid).updateData
+              ({
+                'name': username,
+                'searchKey': username[0]
+              });
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +298,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       SizedBox(height: 58),
-                      TextField 
+                      /*TextField 
                       (
                         onChanged: (value) 
                         {
@@ -282,7 +325,7 @@ class _ProfileState extends State<Profile> {
                           fontFamily: 'Lato',
                           color: Colors.black
                         ),
-                      ),
+                      ),*/
                       SizedBox(height: 22.0),
                       SizedBox(height: 28),
                     ],
@@ -307,11 +350,7 @@ class _ProfileState extends State<Profile> {
               showInSnackBar('Username Already Taken');
             else
             {
-              location.document(user.uid).updateData
-              ({
-                'name': username,
-                'searchKey': username[0]
-              });
+              _showMyDialog();
               setState(() {
                 editScreen = false;
                 username = "";

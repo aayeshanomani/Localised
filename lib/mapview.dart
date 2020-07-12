@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:localised/loading.dart';
-import 'package:localised/searchview.dart';
+import 'loading.dart';
+import 'searchview.dart';
 import 'package:provider/provider.dart';
 import 'package:latlong/latlong.dart';
 

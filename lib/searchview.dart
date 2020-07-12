@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:localised/chatroom.dart';
-import 'package:localised/constants.dart';
-import 'package:localised/customer_home.dart';
-import 'package:localised/database.dart';
-import 'package:localised/helper.dart';
-import 'package:localised/loading.dart';
-import 'package:localised/service_search.dart';
+import 'chatroom.dart';
+import 'constants.dart';
+import 'customer_home.dart';
+import 'database.dart';
+import 'helper.dart';
+import 'loading.dart';
+import 'service_search.dart';
 
 import 'conversation.dart';
 

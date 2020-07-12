@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:localised/constants.dart';
-import 'package:localised/conversation.dart';
-import 'package:localised/database.dart';
-import 'package:localised/helper.dart';
-import 'package:localised/loading.dart';
+import 'constants.dart';
+import 'conversation.dart';
+import 'database.dart';
+import 'helper.dart';
+import 'loading.dart';
 
 class ChatRoom extends StatefulWidget {
 
@@ -86,7 +86,6 @@ class _ChatRoomState extends State<ChatRoom> {
       });
     });
     super.initState();
-
   }
 
   getUserInfo() async
@@ -124,7 +123,9 @@ class ChatTile extends StatelessWidget {
   const ChatTile({ this.username, this.chatRoomId, this.lastMessage});
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    bool chats = false;
+    return GestureDetector
+    (
       onTap: ()
       {
         Navigator.push(context, MaterialPageRoute
@@ -151,10 +152,25 @@ class ChatTile extends StatelessWidget {
                 stream: Firestore.instance.collection('locations').snapshots(),
                 builder: (context, snapshot) 
                 {
+                  print(snapshot.data.documents.length);
+                  if(snapshot.data.documents.length<1)
+                  {
+                    return Container
+                    (
+                      child: Center
+                      (
+                        child: Text
+                        (
+                          'It\'s all empty here'
+                        ),
+                      ),
+                    );
+                  }
                   for (int i = 0; i < snapshot.data.documents.length; i++)
                   {
                     if(snapshot.data.documents[i]['name']==username)
                     {
+                      chats = true;
                       return Container
                       (
                         width: 50,

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:localised/auth.dart';
-import 'package:localised/conversation.dart';
-import 'package:localised/helper.dart';
-import 'package:localised/loading.dart';
-import 'package:localised/newloading.dart';
-import 'package:localised/onboarding.dart';
-import 'package:localised/splash.dart';
-import 'package:localised/user.dart';
-import 'package:localised/wrapper.dart';
+import 'auth.dart';
+import 'conversation.dart';
+import 'helper.dart';
+import 'loading.dart';
+import 'newloading.dart';
+import 'onboarding.dart';
+import 'splash.dart';
+import 'user.dart';
+import 'wrapper.dart';
 import 'package:provider/provider.dart';
+
+import 'payment.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp
       (
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: PaymentScreen(),
       ),
     );
   }

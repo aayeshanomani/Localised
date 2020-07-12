@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:localised/database.dart';
-import 'package:localised/helper.dart';
-import 'package:localised/user.dart';
+import 'database.dart';
+import 'helper.dart';
+import 'user.dart';
 import 'package:provider/provider.dart';
 
 const textInputDecoration = InputDecoration

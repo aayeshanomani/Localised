@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:localised/chatroom.dart';
+import 'chatroom.dart';
 
 class NewLoading extends StatefulWidget {
   @override
