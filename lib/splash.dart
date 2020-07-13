@@ -144,6 +144,16 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                       ],
                     ),
+                    Padding(padding: EdgeInsets.only(top:5)),
+                    Text
+                    (
+                      'Powered By Schaffen Softwares',
+                      style: TextStyle(
+                        color: Colors.red[900],
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Padding(padding: EdgeInsets.only(top:20)),
                     Text
                     (
