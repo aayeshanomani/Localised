@@ -92,7 +92,19 @@ class Auth
       HelperFunc.saveUsername(username);
       HelperFunc.saveUserEmail(email);
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,email,"customer", userLocation.lat, userLocation.long);
+      await Database(uid: user.uid).updateUserData
+      (
+        user.uid,
+        username[0],
+        username,
+        email,
+        "customer",
+        'na',
+        'na',
+        true,
+        userLocation.lat,
+        userLocation.long
+      );
       return _userFromFirebase(user);
 
     }
@@ -115,7 +127,19 @@ class Auth
       HelperFunc.saveUsername(username);
       HelperFunc.saveUserEmail(email);
       //create new document for the user with uid
-      await Database(uid: user.uid).updateUserData(user.uid,username[0],username,email,"merchant", userLocation.lat, userLocation.long);
+      await Database(uid: user.uid).updateUserData
+      (
+        user.uid,
+        username[0],
+        username,
+        email,
+        "merchant",
+        (DateTime.now().millisecondsSinceEpoch).toString(),
+        (DateTime.now().millisecondsSinceEpoch + 90*24*60*60*1000).toString(),
+        false,
+        userLocation.lat, 
+        userLocation.long
+      );
       return _userFromFirebase(user);
 
     }

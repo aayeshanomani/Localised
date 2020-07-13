@@ -38,6 +38,7 @@ dependencies:
   line_icons: ^0.2.0
   font_awesome_flutter: 
   flutter_credit_card: 
+  http: 
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,7 @@ flutter:
     - assets/ill3.jpg
     - assets/newlogo.png
     - assets/name.png
+    - assets/pay.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

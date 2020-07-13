@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'auth.dart';
-import 'conversation.dart';
-import 'helper.dart';
-import 'loading.dart';
-import 'newloading.dart';
-import 'onboarding.dart';
 import 'splash.dart';
 import 'user.dart';
-import 'wrapper.dart';
 import 'package:provider/provider.dart';
 
 import 'payment.dart';
@@ -29,7 +23,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp
       (
         debugShowCheckedModeBanner: false,
-        home: PaymentScreen(),
+        home: SplashScreen(),
       ),
     );
   }

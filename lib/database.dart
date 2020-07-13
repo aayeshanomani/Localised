@@ -21,6 +21,9 @@ class Database
     String name,
     String email,
     String type,
+    String subsDate,
+    String expDate,
+    bool payment,
     double latitude,
     double longitude
   ) async
@@ -30,6 +33,9 @@ class Database
       'searchKey': searchKey,
       'name': name,
       'type': type,
+      'subsDate': subsDate,
+      'expDate': expDate,
+      'payment': payment,
       'latitude': latitude,
       'longitude': longitude,
       'email': email,
@@ -40,6 +46,12 @@ class Database
 
 class DatabaseMethods
 {
+  getPaymentStatus(String username) async
+  {
+    return await Firestore.instance.collection('locations')
+    .where("name", isEqualTo: username)
+    .snapshots();
+  }
   //chat
   createChatRoom(String chatRoomId, chatRoomMap)
   {

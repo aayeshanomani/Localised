@@ -9,55 +9,50 @@ import 'helper.dart';
 class ConversationScreen extends StatefulWidget {
   String chatRoomId;
 
-  ConversationScreen({
-    this.chatRoomId
-});
+  ConversationScreen({this.chatRoomId});
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
 }
 
 class _ConversationScreenState extends State<ConversationScreen> {
-
   Stream<QuerySnapshot> chatMessagesStream;
   TextEditingController textEditingController = new TextEditingController();
 
   DatabaseMethods databaseMethods = new DatabaseMethods();
   Future<String> me = HelperFunc.getUsername();
-  Widget Messages()
-  {
-    return StreamBuilder
-      (
+  Widget Messages() {
+    return StreamBuilder(
       stream: chatMessagesStream,
-      builder: (context, snapshot)
-      {
-        return snapshot.hasData?ListView.builder
-          (
-          itemCount: snapshot.data.documents.length,
-          itemBuilder: (context, index)
-          {
-            return MessageTile(message: snapshot.data.documents[index].data["message"],
-                sendByMe: Constants.myName == snapshot.data.documents[index].data["sendBy"],
-                username: username);
-          },
-        ):Container();
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
+                  return MessageTile(
+                      message: snapshot.data.documents[index].data["message"],
+                      sendByMe: Constants.myName ==
+                          snapshot.data.documents[index].data["sendBy"],
+                      username: username);
+                },
+              )
+            : Container();
       },
     );
   }
 
-  sendMessage(String message) async
-  {
+  sendMessage(String message) async {
     if (message != null) {
       Map<String, dynamic> messageMap = {
         "message": message,
         "sendBy": await HelperFunc.getUsername(),
-        "sendTo": widget.chatRoomId.replaceAll("_", "")
-              .replaceAll(Constants.myName, ""),
+        "sendTo": widget.chatRoomId
+            .replaceAll("_", "")
+            .replaceAll(Constants.myName, ""),
         "time": DateTime.now().millisecondsSinceEpoch,
       };
       databaseMethods.addMessages(widget.chatRoomId, messageMap);
       List<String> users = [username, await HelperFunc.getUsername()];
-      Map<String, dynamic> chatRoomMap =
-      {
+      Map<String, dynamic> chatRoomMap = {
         "users": users,
         "chatRoomId": widget.chatRoomId
       };
@@ -68,17 +63,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   String username;
 
-  readyChat()
-  {
+  readyChat() {
     print("in ready chat");
     setState(() {
-      username = widget.chatRoomId.replaceAll("_", "")
-              .replaceAll(Constants.myName, "");
+      username = widget.chatRoomId
+          .replaceAll("_", "")
+          .replaceAll(Constants.myName, "");
     });
-    
-    databaseMethods.getMessages(widget.chatRoomId).then((val)
-    {
-      if(val != null) {
+
+    databaseMethods.getMessages(widget.chatRoomId).then((val) {
+      if (val != null) {
         setState(() {
           chatMessagesStream = val;
         });
@@ -96,109 +90,87 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 
   String message;
-  
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.red[900]),
     );
-    
-    return Scaffold
-      (
-      appBar: AppBar
-        (
+
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: Colors.redAccent,
         elevation: 50.0,
-        title: Text
-        (
-          username
-        ),
+        title: Text(username),
       ),
-      body: Container
-      (
+      body: Container(
         //padding: EdgeInsets.only(top: 20),
-        decoration: new BoxDecoration
-        (
-          gradient: new LinearGradient
-          (
-              colors: [
-                Color(0xFFFFFFFF),
-                Color(0xFFFFFFFF),
-                Color(0xFFEF9A9A)
-              ],
+        decoration: new BoxDecoration(
+          gradient: new LinearGradient(
+              colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0xFFEF9A9A)],
               begin: const FractionalOffset(0.0, 0.0),
               end: const FractionalOffset(1.0, 1.0),
-              stops: [0.0, 0.5 ,1.0],
+              stops: [0.0, 0.5, 1.0],
               tileMode: TileMode.clamp),
         ),
-        child: Stack
-        (
-          children:
-          [
+        child: Stack(
+          children: [
             Center(
-              child: Container
-                (
-                padding: EdgeInsets.only
-                  (
-                  bottom: 75
-                ),
-                  child: Messages()
-              ),
+              child: Container(
+                  padding: EdgeInsets.only(bottom: 75), child: Messages()),
             ),
-            SizedBox(height: 10.0,),
+            SizedBox(
+              height: 10.0,
+            ),
             Container(
               //color: Colors.grey[100],
-                alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.all(10),
-                child: TextField
-                  (
-                  controller: textEditingController,
-                  style: TextStyle
-                  (
-                    color: Colors.white,
-                    //backgroundColor: Colors.redAccent
+              alignment: Alignment.bottomCenter,
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                controller: textEditingController,
+                style: TextStyle(
+                  color: Colors.white,
+                  //backgroundColor: Colors.redAccent
+                ),
+                onChanged: (value) {
+                  //initiateSearch(value);
+                  message = value;
+                },
+                decoration: InputDecoration(
+                  fillColor: Colors.redAccent,
+                  filled: true,
+                  suffixIcon: IconButton(
+                      color: Colors.red[400],
+                      icon: Icon(
+                        FontAwesomeIcons.arrowAltCircleRight,
+                        color: Colors.white,
+                      ),
+                      iconSize: 30.0,
+                      onPressed: () {
+                        if(message.trim()!="")
+                          sendMessage(message.trim());
+                        message = "";
+                      }),
+                  contentPadding: EdgeInsets.all(17.0),
+                  hintText: 'Type your message',
+                  hintStyle: TextStyle(color: Colors.white),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(140.0)),
                   ),
-                  onChanged: (value) {
-                    //initiateSearch(value);
-                    message = value;
-                  },
-                  decoration: InputDecoration
-                    (
-                      fillColor: Colors.redAccent,
-                      filled: true,
-                    suffixIcon: IconButton
-                      (
-                        color: Colors.red[400],
-                        icon: Icon(FontAwesomeIcons.arrowAltCircleRight, color: Colors.white,),
-                        iconSize: 30.0,
-                        onPressed: () {
-                          sendMessage(message);
-                        }
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                      width: 2.0,
                     ),
-                    contentPadding: EdgeInsets.all(17.0),
-                    hintText: 'Type your message',
-                    hintStyle: TextStyle(color: Colors.white),
-                    enabledBorder: OutlineInputBorder
-                      (
-                      borderSide: BorderSide
-                        (
-                        color: Colors.white,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(140.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder
-                      (
-                      borderSide: BorderSide
-                        (
-                        color: Colors.white,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(140.0)),
-                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(140.0)),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),
@@ -206,13 +178,11 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 }
 
-setLastMessage(message)
-{
+setLastMessage(message) {
   Constants.lastMessage = message.toString();
 }
 
 class MessageTile extends StatelessWidget {
-
   final String message;
   final bool sendByMe;
   final String username;
@@ -224,52 +194,34 @@ class MessageTile extends StatelessWidget {
     setLastMessage(message);
     print(username);
     return Container(
-      padding: EdgeInsets.all(5.0),
-      width: MediaQuery.of(context).size.width,
-      alignment: sendByMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container
-        (
-        margin: sendByMe
-            ? EdgeInsets.only(left: 70)
-            : EdgeInsets.only(right: 70),
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration
-          (
-          gradient: LinearGradient
-            (
-            colors: sendByMe ?
-            [
-              Colors.redAccent[100],
-              Colors.redAccent[100]
-            ] :
-                [
-                  Colors.grey[600],
-                  Colors.grey[600]
-                ]
-          ),
-          borderRadius: sendByMe ? BorderRadius.only
-            (
-            topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              bottomLeft: Radius.circular(15)
-          ):
-              BorderRadius.only
-                (
-                topRight: Radius.circular(15.0),
-                topLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15)
-              )
-        ),
-        child: Text
-          (
-          message,
-          style: TextStyle
-          (
-            color: Colors.white,
-            fontSize: 16,
-          ),
-        )
-      )
-    );
+        padding: EdgeInsets.all(5.0),
+        width: MediaQuery.of(context).size.width,
+        alignment: sendByMe ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+            margin: sendByMe
+                ? EdgeInsets.only(left: 70)
+                : EdgeInsets.only(right: 70),
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: sendByMe
+                        ? [Colors.redAccent[100], Colors.redAccent[100]]
+                        : [Colors.grey[600], Colors.grey[600]]),
+                borderRadius: sendByMe
+                    ? BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15))
+                    : BorderRadius.only(
+                        topRight: Radius.circular(15.0),
+                        topLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15))),
+            child: Text(
+              message,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            )));
   }
 }

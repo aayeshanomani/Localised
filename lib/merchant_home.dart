@@ -78,7 +78,7 @@ class _MerchHomeState extends State<MerchHome> {
           ],
         ),*/
 
-        body: tabs[_currentIndex],
+        body:  tabs[_currentIndex],
 
         bottomNavigationBar: BottomNavigationBar
           (
